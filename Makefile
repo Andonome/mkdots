@@ -15,6 +15,7 @@ $(HOME)/.%: home/%
 repo_scripts = $(wildcard scripts/*)
 live_scripts = $(patsubst scripts/%,$(HOME)/.local/bin/%,$(repo_scripts))
 $(HOME)/.local/bin/%: scripts/%
+	mkdir -p $(@D)
 	$(CP) $< $@
 
 gitignore = .git/info/exclude
