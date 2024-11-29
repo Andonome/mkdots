@@ -4,7 +4,7 @@ vim9script
 set wildoptions+=fuzzy
 set wildmenu
 
-colorscheme nelf
+colorscheme elflord
 
 # stop vi compatibility
 set nocompatible
