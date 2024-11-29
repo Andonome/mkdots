@@ -1,5 +1,5 @@
 #!/bin/sh
-location="/home/$(whoami)/.config/task/notes"
+location="~/.local/state/task/notes"
 [ -e "$location" ] || mkdir "$location"
 
 [ "$1" = "show" ] && {
