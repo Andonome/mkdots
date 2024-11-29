@@ -1,0 +1,100 @@
+#timewarrior
+
+function w(){
+	case $1 in 
+		a)
+		[ -z "$3" ] && timew annotate "${@:2}" || timew annotate @$2 "${@:3}"
+		;;
+		b)
+		timew start "${@:2}"
+		;;
+		d)
+		timew sum day :ann "${@:2}"
+		;;
+		c)
+		timew stop
+		timew shorten @1 2mins || timew delete @1
+		;;
+		e)
+		timew stop
+		;;
+		h)
+echo 'a|nnotate
+b|egin (start)
+c|ancel
+d|ay
+e|nd   (stop)
+j|oin
+l|engthen
+m|onth
+M|ove
+n|conti(n)ue
+r|ecord (track)
+R|remove (delete)
+s|horten
+t|ag
+T|un(T)ag
+u|ndo
+p|art (split)
+w|eek
+y|summr(y)'
+		;;
+		j)
+		[ -z "$3" ] && timew join @1 @2 || \
+		timew join @"$2" @"$3"
+		;;
+		l)
+		[ -z "$3" ] && echo 'Example use: "w l 2 40" = "timew shorten @2 40mins"' || \
+		timew lengthen @$2 @"$3"mins
+		;;
+		m)
+		timew sum :month
+		;;
+		M)
+		timew move @$2 $3
+		;;
+		n)
+		[ -z "$2" ] && timew continue || \
+			timew continue @"$2"
+		;;
+		r)
+		[ -z "$3" ] && timew track "@2" :fill || \
+		timew track "${@:2}"
+		;;
+		R)
+		timew delete @"$2"
+		;;
+		s)
+		[ -z "$3" ] && echo 'Example use: "w s 5 20" = "timew shorten @5 20mins"' || \
+		timew shorten @"$2" "$3"mins
+		;;
+		t)
+		[ -z "$2" ] && echo 'Example use: "w t hopscotch" = "timew tag hopscotch"' || \
+		[ -z "$3" ] && timew tag @"$2" || \
+		timew tag @"$2" "${@:3}"
+		;;
+		T)
+		timew untag @"$2" "${@:3}"
+		;;
+		u)
+		timew undo
+		;;
+		p)
+		timew split @"$2"
+		;;
+		w)
+		timew week
+		;;
+		y)
+		timew summary :ids :ann "${@:2}"
+		;;
+		*)
+		timew
+		;;
+	esac
+	if pgrep i3blocks >/dev/null ; then
+		pkill -RTMIN+2 i3blocks 
+	fi
+}
+
+w $@

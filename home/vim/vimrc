@@ -1,0 +1,75 @@
+vim9script
+
+# better command-line completion
+set wildoptions+=fuzzy
+set wildmenu
+
+colorscheme nelf
+
+# stop vi compatibility
+set nocompatible
+
+# allow searching in sub directories
+set path+=**
+
+set clipboard=unnamedplus
+syntax on
+set number relativenumber showcmd
+# remove empty line indicator
+set fillchars=eob:\ ,
+
+# remove background colour from colourscheme
+autocmd BufRead,BufNewFile * hi Normal ctermbg=NONE
+autocmd BufRead,BufNewFile * hi EndOfBuffer ctermbg=NONE
+autocmd BufRead,BufNewFile * hi MatchParen cterm=bold ctermbg=none ctermfg=cyan
+
+# change highlights
+
+hi SpellBad ctermbg=None
+hi SpellCap ctermbg=None
+hi SpellLocal ctermbg=None
+hi SpellRare ctermbg=None
+hi Special ctermbg=None
+
+set autoindent
+set linebreak
+set tabstop=4
+
+
+# Markdown
+## Don't mark _underscores as errors
+hi link markdownError Normal
+hi link texError Normal
+
+set spelllang=en_gb
+set complete+=kspell
+
+# auto-fix last spelling mistake on Ctrl+l
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+hi clear SpellBad
+hi SpellBad cterm=underline
+hi SpellCap cterm=underline
+hi SpellLocal cterm=underline
+hi SpellRare cterm=underline
+
+map ,v :vsp\|ter<Enter>
+map ,t :vert terminal <Enter>
+map ,T :terminal <Enter>
+
+# ask about saving instead of just failing
+set confirm
+
+# split window navigation
+	map <Esc>h <C-w>h 
+	map <Esc>j <C-w>j 
+	map <Esc>k <C-w>k 
+	map <Esc>l <C-w>l 
+
+set splitbelow splitright
+
+# git
+map ,g :wa<Enter> :!git add % && git commit -S -m""<Left>
+
+filetype on
+filetype plugin on

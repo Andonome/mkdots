@@ -1,35 +1,27 @@
-output: README.md
+CP = ln -f
+.PHONY: output
+output: .default
 
-HOSTNAME != cat /etc/hostname
+include $(wildcard extra/*.mk)
 
-.git/HEAD: /etc/hostname .git/ extra/cron/
-	git switch -c $(HOSTNAME)
+default += $(live_configs) $(live_scripts)
 
-home/: .git/HEAD
-	mkdir home/
-	mkdir -p $(HOME)/.local/bin
-	@test ! -f $(HOME)/.bashrc || cp $(HOME)/.bashrc home/bashrc
-	@test ! -f $(HOME)/.profile || cp $(HOME)/.profile home/profile
-	@echo $(PATH) | grep -qF '.local/bin' || echo 'You do not have ~/.local/bin in your $$PATH.  Add it to your path by adding `PATH=$$PATH:$$HOME/.local/bin` to your ~/.bashrc'
+repo_configs != find home/ -mindepth 1 -type f
+live_configs = $(patsubst home/%,$(HOME)/.%,$(repo_configs))
+$(HOME)/.%: home/%
+	@mkdir -p $(@D)
+	$(CP) $< $@
 
-scripts/mkdots:
-	mkdir $(@D)
-	printf '%s\n' '#!/bin/sh' > $@
-	printf '%s\n' 'cd $(PWD) || exit 1' >> $@
-	printf '%s\n' 'make' >> $@
-	printf '%s\n' 'git diff --quiet || ( git add -p && git commit && git push )'
-	chmod u+x $@
+repo_scripts = $(wildcard scripts/*)
+live_scripts = $(patsubst scripts/%,$(HOME)/.local/bin/%,$(repo_scripts))
+$(HOME)/.local/bin/%: scripts/%
+	$(CP) $< $@
 
-README.md: home/ scripts/mkdots
-	@printf "%s\n\n" "# $(USER) dotfiles" > $@
-	@printf "%s\n" "These are my dots.  There are many like them, but these ones are mine." >> $@
-	$(info Commit these changes with 'git commit')
-	mv extra/Makefile .
-	git add .
+gitignore = .git/info/exclude
+$(gitignore): $(ignored)
+	echo $(ignored) | tr ' ' '\n' > $@
 
-.git:
-	git init
+default += $(gitignore)
 
-extra/cron/:
-	mkdir -p $@
-	crontab -l > extra/cron/tab || exit 0
+.PHONY: .default
+.default: $(default)

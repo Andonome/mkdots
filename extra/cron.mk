@@ -1,5 +1,5 @@
 ### Ucomment to use the makefile.
-# default += cron.txt
+default += cron.txt
 
 ignored += cron.txt
 

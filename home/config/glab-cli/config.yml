@@ -1,0 +1,11 @@
+git_protocol: ssh
+editor: vim
+browser: qutebrowser
+glamour_style: dark
+check_update: false
+display_hyperlinks: false
+hosts:
+    gitlab.com:
+        api_protocol: ssh
+        api_host: gitlab.com
+        token: #put a token or set $GITLAB_TOKEN

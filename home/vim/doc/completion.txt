@@ -1,0 +1,3 @@
+*completion.txt*    For Vim version 9.0.  Last change: 2021 September 18
+
+I stole this code from Stack Exchange.

@@ -1,0 +1,19 @@
+#! /bin/bash
+
+d="$1"
+
+n="$2"
+
+r=0
+x=0
+
+while [ $d -gt 0 ]
+do
+	x=$(( RANDOM % n + 1 ))
+	r=$(( r + x ))
+	echo $x
+	((d--))
+done
+
+figlet $r | lolcat
+

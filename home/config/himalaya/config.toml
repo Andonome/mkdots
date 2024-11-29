@@ -1,0 +1,21 @@
+name = "Malin Freeborn"
+downloads-dir = "~/dl"
+signature = """
+Best,
+ - Malin
+"""
+
+[posteo]
+default = true
+email = "malinfreeborn@posteo.net"
+
+imap-host = "posteo.de"
+imap-port = 993
+imap-login = "malinfreeborn@posteo.net"
+imap-passwd-cmd = "pass email"
+
+smtp-host = "posteo.de"
+smtp-port = 465
+smtp-login = "malinfreeborn@posteo.net"
+smtp-passwd-cmd = "pass email"
+

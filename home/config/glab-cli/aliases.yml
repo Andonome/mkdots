@@ -1,0 +1,3 @@
+c: issue list
+r: issue note $1 --message
+s: issue view $1 --comments

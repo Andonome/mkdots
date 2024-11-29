@@ -1,0 +1,10 @@
+# .bash_profile
+
+# Get the aliases and functions
+[ -f $HOME/.bashrc ] && . $HOME/.bashrc
+
+## If X hasn't started, but should, then start it
+if [ "$(fgconsole 2>/dev/null || echo -1)" -eq 1 ] && [ $UID -eq 1000 ] && [ -z "$SSH_CLIENT" ] && which startx 2>/dev/null 
+    then
+    startx
+fi

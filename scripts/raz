@@ -1,0 +1,55 @@
+#!/bin/sh
+
+revision_list=~/.cache/revision.txt
+
+word="$@"
+translation=""
+
+find_definition(){
+    trans sr:en -show-original n -j -show-prompt-message n -e google "$word"
+}
+
+translation_is_not_clear(){
+    echo "$translation" | grep -vq "Did you mean:"
+}
+
+remember_word(){
+    grep -q "$word" "$revision_list" && \
+    echo "$word already in list" || \
+    translation="$(trans -b sr:en "$word")"
+    if translation_is_not_clear ; then
+            for n in $(seq 1 3); do
+                echo "$word : $translation" >> "$revision_list"
+            done
+        fi
+}
+
+get_revise_word(){
+    word="$(shuf "$revision_list" | head -1)"
+    serbian_word="$(echo $word | cut -d: -f1)"
+    english_word="$(echo $word | cut -d: -f2)"
+}
+
+remove_word(){
+    sed -i "0,/$english_word/{/$english_word/d;}" "$revision_list"
+    echo correct - \"$serbian_word\" means \"$english_word\"
+}
+
+check_answer(){
+    read answer
+    if [ "$(echo "$answer" | wc -c)" -gt 2 ]; then
+        echo "$english_word" | grep -q "$answer"
+    else
+        exit 1
+    fi
+}
+
+if [ -z "$1" ]; then
+    get_revise_word
+    echo "What does '$serbian_word' mean?"
+    check_answer && remove_word || \
+            echo "No, $serbian_word means $english_word"
+else
+    find_definition && \
+    remember_word 
+fi

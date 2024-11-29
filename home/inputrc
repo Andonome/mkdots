@@ -1,0 +1,14 @@
+# Make everything vim.
+set editing-mode vi
+set show-mode-in-prompt on
+set vi-ins-mode-string "  "
+set vi-cmd-mode-string " "
+
+set keymap vi-insert
+
+"\C- ": shell-expand-line
+"\C-x": glob-expand-word
+Control-g: "g\n"
+Control-y: "| ccze\n"
+Control-o: "\C-u lfcd\n\C-u"
+Control-l: "\C-u clear -x && ls\n"

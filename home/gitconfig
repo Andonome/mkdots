@@ -1,0 +1,27 @@
+[core]
+	excludesfile = /home/ghost/.gitignore_global
+	pager = bat --style=plain
+[user]
+	name = Malin Freeborn
+	email = malinfreeborn@posteo.net
+	signingKey = 024C6B1C84449BD1CB4DF7A152295D2377F4D70F
+[pull]
+	rebase = false
+[init]
+	defaultBranch = master
+[safe]
+	directory = /home/ghost/Projects/websites/splint.rs
+	directory = /share/soft-serve
+[advice]
+	addIgnoredFile = false
+[protocol "file"]
+	allow = always
+[branch]
+  sort = -committerdate
+[commit]
+	gpgSign = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

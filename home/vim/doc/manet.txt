@@ -1,0 +1,5 @@
+*manet.txt*    For Vim version 9.0.  Last change: 2021 September 18
+
+This is ma netrw config.
+
+Use ,f to open the file-brower.

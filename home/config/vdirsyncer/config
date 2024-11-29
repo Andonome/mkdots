@@ -1,0 +1,63 @@
+[general]
+
+# A folder where vdirsyncer can store some metadata about each pair.
+status_path = "~/.config/vdirsyncer/status/"
+
+[pair nextcloud_contacts]
+# A `[pair <name>]` block defines two storages `a` and `b` that should be
+# synchronized. The definition of these storages follows in `[storage <name>]`
+# blocks. This is similar to accounts in OfflineIMAP.
+a = "calendar_local"
+b = "radicale"
+
+# Synchronize all collections that can be found.
+# You need to run `vdirsyncer discover` if new calendars/addressbooks are added
+# on the server.
+collections = ["from a", "from b"]
+
+# Synchronize the "display name" property into a local file (~/.contacts/displayname).
+metadata = ["displayname"]
+
+# To resolve a conflict the following values are possible:
+#   `null` - abort when collisions occur (default)
+#   `"a wins"` - assume a's items to be more up-to-date
+#   `"b wins"` - assume b's items to be more up-to-date
+# conflict_resolution = null
+
+#[storage nextcloud_contacts_local]
+
+# A storage references actual data on a remote server or on the local disk.
+# Similar to repositories in OfflineIMAP.
+#type = "filesystem"
+#path = "~/.config/vdirsyncer/contacts/"
+#fileext = ".vcf"
+
+[storage radicale]
+type = "carddav"
+url = "https://cal.splint.rs"
+# get this on your nextcloud calendar, then remove the calendar's name in the url, e.g. remove '/Personal/'.
+username = "$USER"
+password = "$(pass cal.splint.rs)"
+
+# Calendar
+
+#[pair nextcloud_calendar]
+#a = "nextcloud_calendar_local"
+#b = "nextcloud_calendar_remote"
+#collections = ["personal"]
+# this can be collections = ["personal","work"]
+
+# Calendars also have a color property
+metadata = ["displayname", "color"]
+
+#[storage nextcloud_calendar_local]
+#type = "filesystem"
+#path = "~/.config/vdirsyncer/calendars/"
+#fileext = ".ics"
+
+#[storage nextcloud_calendar_remote]
+#type = "caldav"
+#url = "https://website.com/app/php"
+#username = "yourUsername"
+#password = "pass123"
+#

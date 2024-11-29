@@ -1,0 +1,309 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# fix virtualbox in arch
+VBOX_USB=usbfs
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+shopt -s cmdhist
+
+# cd into a directory just by naming it
+shopt -s autocd
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTFILE=$HOME/.cache/bash_history
+alias hst='export HISTFILE="$PWD"/.bash_history'
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+color_prompt=yes
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable color support of ls and grep
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='eza --icons=auto --group-directories-first'
+    alias grep='grep --color=auto -I'
+fi
+
+# Bindings
+
+alias fdcmd='fc -s $(history | sk --tac --no-sort | grep -oP "[0-9]*" && printf "")'
+bind -m vi-command -x '"\C-r": fdcmd'
+
+lfcd () {
+    if [ -z "$LF_LEVEL" ]; then
+        cd "$(command lfrun -print-last-dir "$@")"
+    else
+        exit 0
+    fi
+}
+
+# Aliases
+alias ll='eza -AlF --group-directories-first'
+alias e=exit
+alias sl=sleep
+alias v='vim  -p'
+alias vv='vim_target="$(sk --preview="bat {} --color=always" -c "find -maxdepth 4 -type f")" && vim "$vim_target"'
+alias suv='sudo -e'
+alias zzz='[ -x "$(type -P systemctl)" ] && sudo systemctl suspend || sudo zzz -z'
+alias xd='xdotool key'
+
+# autocompletion
+
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+PATH=$PATH:~/.local/bin
+
+alias c='clear -x && ls'
+alias l='clear -x'
+
+# Notes
+alias no='$EDITOR .no.md'
+function n(){
+	[ -z "$1" ] && cat .no.md || echo $@ >> .no.md
+}
+
+b(){
+	eval "cd $(for d in $(seq 1 $1); do printf ../; done)"
+}
+
+function slow(){
+	ff=/tmp/bashpipe_$(date +%s)
+	mkfifo $ff 2>/dev/null
+	( cat $ff | perl -We 'use Time::HiRes;$|++;while(read(STDIN,$c,1)){Time::HiRes::usleep(15000);print $c;}' )& exec &> $ff
+}
+
+repcheck(){
+	[ -z "$1" ] && target=md || target="$1"
+	grep -r --color=always --include="*.tex" --include="*.$target" -E '(\b\S+\b)\s+\b\1\b' .
+}
+
+function lookit(){
+	curl -s http://api.db-ip.com/v2/free/$1
+}
+
+function sendfile(){
+	curl --upload-file "$1" https://free.keep.sh
+}
+
+function sendtext(){
+	[ -f "$1" ] && \
+	cat "$1" | nc termbin.com 9999 || \
+	echo "$($1)" | nc termbin.com 9999
+}
+
+function gimme (){
+	echo "$1" >> ~/vids/.list
+}
+
+function g(){
+	[ -z $1 ] && \
+	[ -e ~/.dirs ] && cd "$(cat ~/.dirs | fzy)" \
+	|| \
+	cd "$(grep g$1 ~/.map | awk '{print $4}' | sed s#~#$HOME#)"
+}
+
+function down(){
+	[ -z $1 ] && echo set time && exit 1
+	time="$1"
+	sudo rtcwake -m mem -s "$(( 3600 * $1 ))"
+}
+
+#Common
+
+alias venv='command -v deactivate && deactivate || { [ -d venv ] || virtualenv venv && source venv/bin/activate ; }'
+
+function fin(){
+	[ -z "$1" ] && msg="Is finish"
+	notify-send "$msg"
+}
+
+alias send='export DISPLAY=0;notify-send'
+alias z='zathura "$(ls -S *.pdf | head -n1 )" &>/dev/null & disown'
+
+alias f=lfrun
+alias SS="sudo systemctl"
+alias re='exec bash'
+
+# Package Managers
+alias sp='sudo pacman'
+
+# Programs
+o(){
+	xdg-open "$1" &>/dev/null &
+	disown
+}
+cht(){
+	curl -s https://cht.sh/"$(echo $@ | tr ' ' '+')" | $PAGER
+}
+
+say(){
+	echo $@ | festival --tts
+}
+
+alias dd='echo "Are you sober?"'
+alias sudo='sudo '
+alias cmus='cmus --listen /tmp/cmus'
+
+alias prof='profanity;e'
+alias mpv='mpv --geometry=1400'
+alias yt='ytfzf -t --detach --search-again'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias tra='transmission-remote -l'
+alias traa='sudo systemctl start transmission && transmission-remote -a'
+alias tral='transmission-remote -l | grep -v 100'
+function traf (){
+	sudo systemctl start transmission
+	[ -n "$1" ] && transmission-remote -a "$1"
+	target="$(transmission-remote -l | sed -n 'x;$p' | awk '{print $1}')"
+	transmission-remote -t $target --move /mnt/share/Films/
+}
+function tras (){
+	sudo systemctl start transmission
+	[ -n "$1" ] && transmission-remote -a "$1"
+	target="$(transmission-remote -l | sed -n 'x;$p' | awk '{print $1}')"
+	transmission-remote -t $target --move /mnt/share/Series/
+}
+function tram () {
+	hash=$(transmission-remote -t $1 --info | grep Hash: | awk '{print $2}')
+	[ -n "$2" ] && \
+		rmDate="$(date -d "$2 days" +%m/%d/%Y)" || \
+		rmDate="$(date -d "1 month" +%m/%d/%Y)" 
+	echo "sudo systemctl start transmission && transmission-remote -t $hash -rad" | at "$rmDate"
+}
+alias scim='sc-im'
+alias up='unison pi||unison pir'
+
+#Fun
+alias cm='cmatrix -absC white||ncmatrix;exit'
+alias starwars="telnet towel.blinkenlights.nl"
+
+#Scripts
+alias scr='clear;fastfetch'
+alias bn="gio trash"
+alias strpic='exiftool -all:all= -r'
+
+#Task Warrior
+alias t=task
+alias tn='clear;task next'
+alias ta='task add'
+alias tan='task add due:eod-"$(task count due:tod)"h'
+alias tat='task add due:now+20h until:due+14d'
+function tc(){
+	[ -z $1 ] && task context ||\
+	task context "$1" && \
+	export tc="$1"
+	tcon
+}
+alias tm='task modify'
+alias tur='task add due:eod priority:M start:now'
+alias tau='task add until:eod due:eod'
+alias tcal='clear;task calendar'
+alias tl='clear;task list'
+alias tp='clear;task projects'
+alias tt='clear;task +DUE or +OVERDUE or scheduled:tomorrow or scheduled:today'
+alias td='clear;task next +ACTIVE or +OVERDUE or due:today or scheduled:today or pri:H'
+alias trol="task due:yes status:pending modify due:tod"
+alias tno='tasknotes.sh'
+alias tsh='tasknotes.sh show'
+alias tal='task add dep:"$(task +LATEST uuids)"'
+alias tanl='task add due:now+2h dep:"$(task +LATEST uuids)"'
+alias tah='task add +tmp unt:+24h due:eod'
+
+function ts(){
+	task start $1
+	pkill -RTMIN+2 i3blocks
+}
+
+function tb(){
+	task burndown.daily pro:$1
+}
+
+
+# Git
+
+alias gd="git diff --word-diff"
+alias gla="git log --all --decorate --oneline --graph"
+alias gm='git merge'
+alias gc='git commit'
+alias gup='git commit --amend --date=now --no-edit'
+alias gu='git pull'
+alias gs='git status'
+alias gl='git log --graph --show-signature'
+alias gb='git branch'
+alias gco='git checkout --recurse-submodules $(git branch | cut -c 3-|fzy)'
+alias grs='git reset --hard HEAD'
+alias gpa='git remote show  | while read remote; do git remote get-url $remote | grep -qv http && git push $remote; done'
+
+# Weather
+alias wet="curl wttr.in/Београд~"
+alias wetl="curl wttr.in/"
+alias wett="curl v2.wttr.in"
+alias moon="clear;curl wttr.in/Moon"
+
+# Crypt
+
+function lock(){
+    if [ -d crypt ]; then
+        echo locking
+        fusermount -u "$(pwd)"/crypt
+        rmdir "$(pwd)"/crypt
+    elif [ -d "$(pwd)"/.crypt ]; then
+        echo unlocking
+        command -v encfs >/dev/null && \
+        mkdir -p "$(pwd)"/crypt && \
+        pass crypt | encfs  --stdinpass "$(pwd)"/.crypt/ "$(pwd)"/crypt
+    else
+        echo New crypt
+        mkdir .crypt crypt
+        pass crypt | encfs  --standard --stdinpass "$(pwd)"/.crypt/ "$(pwd)"/crypt
+    fi
+}
+
+function wotsa(){
+	def="$(curl -s dict://dict.org/define:$1: | grep -vP '^\d\d\d ')"
+	if [ "$def" = "" ]; then
+		echo no definition
+	else
+		echo "$def" | mdcat -p
+	fi
+}
+
+source /etc/profile.d/z_powerbash.sh

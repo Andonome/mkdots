@@ -1,0 +1,2 @@
+provider: duckduckgo
+whitelist: [archpkg, duckduckgo, archwiki, arstechnica, aur, bandcamp, dict, explainshell, freebsdman, hackernews, openbsdman, overstock, protondb, pydoc, pypi, python, reddit, regex, stackoverflow, taobao, thepiratebay, theregister, wikipedia, wolframalpha, youtube, zdf]

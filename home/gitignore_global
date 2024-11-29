@@ -1,0 +1,7 @@
+.no.md
+.bash_history
+*.synctex.gz
+priv*
+tmp
+*.swp
+.unison*.tmp

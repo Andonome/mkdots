@@ -1,0 +1,4 @@
+#!/bin/sh
+cd /home/ghost/.dots || exit 1
+make
+git diff --quiet || ( git add -p && git commit && git push )

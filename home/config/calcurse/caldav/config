@@ -1,0 +1,15 @@
+[General]
+
+Binary = calcurse
+Hostname = https://cal.splint.rs
+Path = /ghost/2e858850-debd-3a07-4940-ab788ccc48c9
+AuthMethod = basic
+InsecureSSL = No
+HTTPS = Yes
+SyncFilter = cal,todo
+Verbose = Yes
+DryRun = Yes
+
+[CustomHeaders]
+User-Agent = Mac_OS_X/10.9.2 (13C64) CalendarAgent/176
+

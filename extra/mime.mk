@@ -1,5 +1,5 @@
 ### Ucomment to use the makefile.
-# default += $(HOME)/.local/share/mime
+default += $(HOME)/.local/share/mime
 
 checklist += xdg-mime
 dross += $(local_mimetype_files) $(HOME)/.local/share/mime $(HOME)/.config/mimeapps.list
