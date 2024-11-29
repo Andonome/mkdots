@@ -285,12 +285,15 @@ function lock(){
         echo locking
         fusermount -u "$(pwd)"/crypt
         rmdir "$(pwd)"/crypt
+        exec bash
     elif [ -d "$(pwd)"/.crypt ]; then
+        HISTFILE=/dev/null
         echo unlocking
         command -v encfs >/dev/null && \
         mkdir -p "$(pwd)"/crypt && \
         pass crypt | encfs  --stdinpass "$(pwd)"/.crypt/ "$(pwd)"/crypt
     else
+        HISTFILE=/dev/null
         echo New crypt
         mkdir .crypt crypt
         pass crypt | encfs  --standard --stdinpass "$(pwd)"/.crypt/ "$(pwd)"/crypt
