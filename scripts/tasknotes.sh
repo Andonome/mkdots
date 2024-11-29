@@ -1,6 +1,10 @@
 #!/bin/sh
-location="~/.local/state/task/notes"
-[ -e "$location" ] || mkdir "$location"
+
+location="$HOME/.local/state/task/notes"
+
+[ -d "$location" ] || mkdir "$location"
+
+set -x
 
 [ "$1" = "show" ] && {
 	{ tu="$(task "$2" uuids).md" || echo "Input a task number" ; }
