@@ -9,9 +9,6 @@
 	rebase = false
 [init]
 	defaultBranch = master
-[safe]
-	directory = /home/ghost/Projects/websites/splint.rs
-	directory = /share/soft-serve
 [advice]
 	addIgnoredFile = false
 [protocol "file"]
