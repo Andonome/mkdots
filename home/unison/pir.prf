@@ -18,7 +18,7 @@ path=.w3m/bookmark.html
 
 path=.local/share/calcurse
 
-path=.local/share/task
+path=.local/state/task
 path=.config/lf
 path=.config/zathura
 path=.config/.bombadillo.ini
