@@ -10,7 +10,7 @@ timeout 2 curl -s wttr.in/Moon
 
 import_events.sh https://dmz.rs/events.ical
 
-$HOME/.scripts/clean.sh
+$HOME/.local/bin/clean.sh
 
 logfile="$(ls /tmp/CLEAN-* | head -n1)"
 
@@ -18,7 +18,7 @@ for i in $family
 do
 	sleep 2
 	if [ "$HOSTNAME" != "$i" ] && ping -c 1 $i >/dev/null; then
-		ssh $i 'bash ~/.scripts/clean.sh'
+		ssh $i 'bash ~/.local/bin/clean.sh'
 		echo -e "\n\n# $i fixes" >> "$logfile"
 		ssh $i "[ -f $logfile ] && cat $logfile" >> $logfile
 	fi
