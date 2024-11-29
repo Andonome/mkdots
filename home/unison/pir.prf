@@ -18,7 +18,6 @@ path=.w3m/bookmark.html
 
 path=.local/share/calcurse
 
-path=.config/task
 path=.local/share/task
 path=.config/lf
 path=.config/zathura
