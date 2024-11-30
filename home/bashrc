@@ -311,4 +311,8 @@ function wotsa(){
 	fi
 }
 
-source /etc/profile.d/z_powerbash.sh
+[ ! -f ~/.config/powerbash.sh ] || \
+    . ~/.config/powerbash.sh || \
+    [ ! -f /etc/profile.d/z_powerbash.sh ] || \
+    . ~/.config/powerbash.sh
+
