@@ -8,6 +8,8 @@ case $- in
       *) return;;
 esac
 
+[ -n "$PAGER" ] || PAGER='less -R'
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -305,7 +307,7 @@ function wotsa(){
 	if [ "$def" = "" ]; then
 		echo no definition
 	else
-		echo "$def" | mdcat -p
+		echo "$def" | $PAGER
 	fi
 }
 
