@@ -137,7 +137,7 @@ function gimme (){
 
 function g(){
 	[ -z $1 ] && \
-	[ -e ~/.dirs ] && cd "$(cat ~/.dirs | fzy)" \
+	[ -e ~/.cache/index ] && cd "$(sk -c "cat ~/.cache/index")" \
 	|| \
 	cd "$(grep g$1 ~/.map | awk '{print $4}' | sed s#~#$HOME#)"
 }
@@ -270,7 +270,7 @@ alias gu='git pull'
 alias gs='git status'
 alias gl='git log --graph --show-signature'
 alias gb='git branch'
-alias gco='git checkout --recurse-submodules $(git branch | cut -c 3-|fzy)'
+alias gco='git checkout --recurse-submodules $(sk -c "git branch | cut -c 3-")'
 alias grs='git reset --hard HEAD'
 alias gpa='git remote show  | while read remote; do git remote get-url $remote | grep -qv http && git push $remote; done'
 
