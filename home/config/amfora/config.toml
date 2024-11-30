@@ -1,13 +1,13 @@
 [a-general]
 # Press Ctrl-H to access it
-home = "gemini://geddit.glv.one/"
+home = "gemini://auragem.letz.dev"
 
 auto_redirect = true
 
 http = '/usr/bin/qutebrowser'
 
 # Any URL that will accept a query string can be put here
-search = "gemini://medusae.space/search_all.gmi"
+search = "gemini://auragem.letz.dev/search/s?"
 
 color = true
 ansi = true
