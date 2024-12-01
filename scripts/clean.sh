@@ -27,9 +27,8 @@ if [ $(command -v figlet) ]; then
 	}
 fi
 
-makeHomeIndex(){
-    find $HOME -maxdepth 4 -type d,l -not -path '*/\.*' > "$HOME"/.cache/index
-}
+test ! "$(command -v sv)" || SERVICE_COMMAND=sv
+test ! "$(command -v systemctl)" || SERVICE_COMMAND=systemctl
 
 if [ $(command -v fastfetch) ]; then
 	fastfetch
@@ -65,20 +64,10 @@ update_as_sudo(){
 	)
 }
 
-stop_unison(){
-	[ $(command -v sv) ] && SERVICE_COMMAND="sv"
-	[ $(command -v systemctl) ] && SERVICE_COMMAND="systemctl"
-	sudo $SERVICE_COMMAND status unison >/dev/null 2>/dev/null && \
-			sudo $SERVICE_COMMAND stop unison
-	for x in $(pgrep unison); do
-			kill "$x"
-	done
-	find "$HOME" -name "*.unison.tmp" -exec rm -rf '{}' ';'
-	sudo $SERVICE_COMMAND start unison
-}
-
-start_unison(){
-		sudo $SERVICE_COMMAND start unison
+[ -r $HOME/.unison/pi.prf ] && [ -n "$SERVICE_COMMAND" ] && {
+    sudo "$SERVICE_COMMAND" stop unison
+    unison -batch pi
+    sudo "$SERVICE_COMMAND" start unison
 }
 
 sunday_big_clean(){
@@ -91,8 +80,6 @@ sunday_big_clean(){
 	update_as_so vkpurge list
 	update_as_sudo pkgfile "-u"
 	update_as_sudo /opt/texlive/"$(date +%Y)"/bin/x86_64-linux/tlmgr "update --all"
-	stop_unison
-	start_unison
 }
 
 sudo find /etc/ -name "*.pacnew" >> "$logfile"
