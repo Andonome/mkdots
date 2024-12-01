@@ -1,8 +1,5 @@
-PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/ghost/.local/bin
-HOME=/home/ghost
-MAILTO=ghost
 
 @daily	sed -i "1 s#.*#map ga cd ~/arc/$(date +\%Y/\%m)#" .map && mkdir -p $ARC
 
-2 */2 * * * find -maxdepth 4 -type d,l -not -path '*/\.*' > $HOME/.cache/index
+2 */2 * * * find * -maxdepth 4 -type d,l -not -path '*/\.*' > .cache/index
 
