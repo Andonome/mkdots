@@ -1,0 +1,59 @@
+#!/bin/sh
+
+ranno(){ t=${1:-8} && seq $t | sort -R | head -1 ;}
+
+showme(){
+    timeout --foreground --preserve-status $(ranno 8)m watch $@
+}
+
+alias task="task rc.verbose:nothing rc.confirmation:no rc.hooks:off"
+
+random_visual(){
+    r=$(ranno 8)
+    case "$r" in
+    1)
+    showme journalctl --user -e
+    ;;
+    2)
+    timeout $(ranno)m top
+    ;;
+    3)
+    timeout --foreground $(ranno)m asciiquarium -t
+    ;;
+    4)
+    showme cronnext /var/spool/cron/$USER -l
+    ;;
+    5)
+    clear -x
+    task next +ACTIVE or +OVERDUE or due:today or scheduled:today or pri:H
+    t=$(ranno)
+    x=$(( t + 4 ))
+    sleep $x
+    ;;
+    6)
+    clear -x
+    task calendar
+    t=$(ranno)
+    x=$(( t + 4 ))
+    sleep $x
+    ;;
+    7)
+    clear -x
+    timew summary day
+    t=$(ranno)
+    x=$(( t + 4 ))
+    sleep $x
+    ;;
+    8)
+    clear -x
+    timew week
+    t=$(ranno)
+    x=$(( t + 4 ))
+    sleep $x
+    ;;
+    esac
+}
+
+for i in $(seq 10); do
+    random_visual
+done
