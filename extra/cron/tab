@@ -1,5 +1,5 @@
 
-@daily	sed -i "1 s#.*#map ga cd ~/arc/$(date +\%Y/\%m)#" .map && mkdir -p $ARC
+@daily	sed -i "1 s#.*#map ga cd ~/arc/$(date +\%Y/\%m)#" .map && mkdir -p $HOME/arc/$ARC
 
 2 */2 * * * find * -maxdepth 4 -type d,l -not -path '*/\.*' > .cache/index
 
