@@ -1,35 +1,30 @@
 #!/bin/sh
 
-[ -z "$2" ] && echo "Give mailbox and how many months to go back" && exit 1
-
 set -u
 set -e
 
-mailbox="$1"
-months="$2"
+cd ~/Mail
 
-archived_date="$(date -d "$months months ago" +%Y-%m)"
+mailbox="${1:-Trash}"
+no_weeks="${2:-12}"
 
-archive_name="$(echo "$mailbox"-"$archived_date" | tr '/' '-')"
+archive_name="$mailbox-$(date -d "$no_weeks weeks ago" +%Y-%m-%d)"
+backup_location=/mnt/dungeon/backups/mail
 
-cd ~/Mail/"$mailbox"/cur
+old="$(date -d "$no_weeks weeks ago" +%s)"
 
-find_mails_in_box(){
-	grep -lP "^Date:.*$(date -d "$months months ago" +%b\ %Y).*\d\d\d\d( \(\w{3}\))?$" *
+find_old_emails(){
+    for email in $mailbox/cur/*; do
+        test "$(date -d "$(grep -im1 '^date:' "$email" | cut -d: -f2)" +%s)" -gt "$old" || \
+            echo "$email"
+    done
+
 }
 
-store_emails_in_box(){
-	find_mails_in_box | tar czf /mnt/dungeon/backups/mail-"$archive_name".tgz -T -
-}
+email_list="$(find_old_emails)"
 
-delete_emails_in_box(){
-    num_found=0
-	find_mails_in_box | while read -r line; do
-		gio trash ~/Mail/$mailbox/cur/"$line"
-        num_found=$(( num_found + 1 ))
-	done
-    test -z "$PS1" || echo "Deleted $num_found emails."
-}
+test ! -n "$email_list" && exit 0
 
+tar -czf "$backup_location"/"$archive_name".tgz $email_list
 
-store_emails_in_box && delete_emails_in_box
+gio trash $email_list
