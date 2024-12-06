@@ -76,7 +76,7 @@ alias ll='eza -AlF --group-directories-first'
 alias e=exit
 alias sl=sleep
 alias v='vim  -p'
-alias vv='vim_target="$(sk --preview="bat {} --color=always" -c "find -maxdepth 4 -type f")" && vim "$vim_target"'
+alias vv='vim "$(sk --preview="$PAGER {} --color=always" -c "find -L * -maxdepth 4 -type f")"'
 alias suv='sudo -e'
 alias zzz='[ -x "$(type -P systemctl)" ] && sudo systemctl suspend || sudo zzz -z'
 alias xd='xdotool key'
