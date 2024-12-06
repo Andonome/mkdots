@@ -10,7 +10,7 @@ for x in $blocking_tasks; do
     export no_blocking_tasks="$(( no_blocking_tasks + 1 ))"
     ready="$(tsk _get $x.description)"
     for d in $(tsk depends.has:$x uuids ); do
-        goal="$(tsk _get $d.description)"
+        goal="$(tsk _get $d.description | sed -r 's/#[0-9]+: //' | tr -d '#' )"
         printf '\n%s\n' "[ ---\n $ready \n___ ] ---> [ $goal ] {border-style: dashed;}"
         export no_blocking_tasks=$(( no_blocking_tasks + 1 ))
         if [ "$no_blocking_tasks" -lt 5 ] ; then
