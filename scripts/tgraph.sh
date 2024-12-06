@@ -6,16 +6,20 @@ blocking_tasks="$(tsk $query +UNBLOCKED '( status:pending or status:active )' uu
 
 export no_blocking_tasks=0
 
+get_description(){
+    tsk _get $1.description | tr -d [:cntrl:] | tr -d [:punct:]
+}
+
 for x in $blocking_tasks; do
     export no_blocking_tasks="$(( no_blocking_tasks + 1 ))"
-    ready="$(tsk _get $x.description)"
+    ready="$(get_description $x)"
     for d in $(tsk depends.has:$x uuids ); do
-        goal="$(tsk _get $d.description | sed -r 's/#[0-9]+: //' | tr -d '#' )"
+        goal="$(get_description $d)"
         printf '\n%s\n' "[ ---\n $ready \n___ ] ---> [ $goal ] {border-style: dashed;}"
         export no_blocking_tasks=$(( no_blocking_tasks + 1 ))
         if [ "$no_blocking_tasks" -lt 5 ] ; then
             for s in $(tsk depends.has:$d uuids ); do
-                later="$(tsk _get $s.description)"
+                later="$(get_description $s)"
                 printf '%s\n' "[ $goal ] ...> [ $later ] {border-style: dashed;}"
             done
         fi
