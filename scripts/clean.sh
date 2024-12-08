@@ -64,12 +64,6 @@ update_as_sudo(){
 	)
 }
 
-[ -r $HOME/.unison/pi.prf ] && [ -n "$SERVICE_COMMAND" ] && {
-    sudo "$SERVICE_COMMAND" stop unison
-    unison -batch pi
-    sudo "$SERVICE_COMMAND" start unison
-}
-
 sunday_big_clean(){
 	git -C ~/.dots gc
 	update_as_so yay "-Sc --noconfirm"
