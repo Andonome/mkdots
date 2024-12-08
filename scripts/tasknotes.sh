@@ -4,31 +4,59 @@ location="$HOME/.local/state/task/notes"
 
 [ -d "$location" ] || mkdir "$location"
 
-set -x
+alias tsk="task rc.verbose=nothing rc.gc=no"
 
-[ "$1" = "show" ] && {
-	{ tu="$(task "$2" uuids).md" || echo "Input a task number" ; }
-	{
-		[ -e "$location"/"$tu" ] && cat "$location"/"$tu" && exit 0 
-	} || \
-		{
-		echo "No notes" 
-		exit 1 
-	}
+pager_program="${PAGER:-less -R}"
+
+while getopts "svrh" opt; do
+  case "${opt}" in
+    v)
+      echo "using verbose mode"
+	  DEBUG=true
+      set -x
+      ;;
+    s)
+	  show=true
+      ;;
+    r)
+		delete_note=true
+      ;;
+    h)
+		echo -e "Options are -v (verbose), -r (remove/ delete task notes), and -s (show)."
+		exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift "$(($OPTIND -1))"
+
+[ -z "$1" ] && echo "Give a task number" && exit 1 || tu="$(tsk uuids "$1")"
+
+note_file="$tu.md"
+
+task_desc="$(tsk _get "$tu".description)"
+
+[ -z "$delete_note" ] || {
+    rm "$location/$note_file"
+    exit 0
+    } && \
+[ -e "$location/$note_file" ] && {
+    [ -z "$show" ] && $pager_program "$location/$note_file" || \
+    $EDITOR "$location/$note_file"
+} || \
+{
+    [ -z "$show" ] || {
+        echo "No notes for $task_desc"
+        exit 1
+    }
+    (
+        printf "%s\n" "$task_desc"
+        printf "%s\n\n\n" "$task_desc" | tr [:print:] '='
+    ) >> "$location/$note_file"
+    $EDITOR +4 "$location/$note_file"
 }
 
-[ "$1" = "rm" ] && {
-	{ tu="$(task "$2" uuids).md" || echo "Input a task number" ; }
-	{
-		[ -e "$location/$tu" ] && rm "$location/$tu" && exit 0 
-	} || \
-		{
-		echo "No notes" 
-		exit 1 
-	}
-}
-
-tu="$(task "$1" uuids).md" || echo "Something went wrong with identifying that task's number."
-[ ! -e "$location"/"$tu" ] && task "$1" minimal | tail -3 | head -1 > "$location"/"$tu" && echo '' >> "$location"/"$tu"
-
-vim "$location"/"$tu"
