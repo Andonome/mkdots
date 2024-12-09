@@ -69,14 +69,15 @@ sunday_big_clean(){
 	update_as_so yay "-Sc --noconfirm"
 	update_as_sudo reflector  "--latest 5 --country Serbia --save /etc/pacman.d/mirrorlist"
 	update_as_sudo pacman "-Sc --noconfirm"
-	command -v pacman >/dev/null && update_as_sudo pacman "-Rsn $(pacman -Qdtq)"
+	command -v pacman >/dev/null && {
+        old_pkgs="$(pacman -Qdtq)"
+        test "$old_pkgs" = "" || sudo pacman -Rns "$old_pkgs"
+    }
 	update_as_sudo xbps-remove "-oOy"
 	update_as_so vkpurge list
 	update_as_sudo pkgfile "-u"
 	update_as_sudo /opt/texlive/"$(date +%Y)"/bin/x86_64-linux/tlmgr "update --all"
 }
-
-sudo find /etc/ -name "*.pacnew" >> "$logfile"
 
 [ "$(date +%u)" = 7 ] && \
 	sunday_big_clean
@@ -90,8 +91,6 @@ update_as_sudo xbps-install "-Syu"
 update_as_so yay "-Syu"
 
 update_as_so flatpak update
-
-update_as_so pihole '-g'
 
 update_as_so bugwarrior-pull ""
 
