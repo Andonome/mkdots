@@ -1,5 +1,10 @@
 #!/bin/sh
 
+[ ! -z "$1" ] || {
+    echo "Give me a youtube URL"
+    exit 1
+}
+
 TMPFILE=$(mktemp)
 
 URL="$(printf "$1" | sed 's/yt.artemislena.eu/www.youtube.com/')"
@@ -34,7 +39,7 @@ get_channel_name(){
 
 get_feed_line(){
 	get_feed_url
-	CHANNEL_NAME="$(get_channel_name)"
+	CHANNEL_NAME="$(get_channel_name)" && rm "$TMPFILE"
 	echo "$FEED_URL \"$CHANNEL_NAME\" "
 }
 
