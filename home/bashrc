@@ -108,6 +108,7 @@ b(){
 
 function slow(){
 	ff=/tmp/bashpipe_$(date +%s)
+    powerbash prompt system
 	mkfifo $ff 2>/dev/null
 	( cat $ff | perl -We 'use Time::HiRes;$|++;while(read(STDIN,$c,1)){Time::HiRes::usleep(15000);print $c;}' )& exec &> $ff
 }
