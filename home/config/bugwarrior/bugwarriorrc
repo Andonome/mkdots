@@ -2,7 +2,6 @@
 targets = bind, bind_web, artblocks, gitlab_groups
 annotation_links = False
 annotation_comments = False
-legacy_matching = False
 #annotation_length = 20
 merge_annotations = False
 inline_links = False
@@ -12,12 +11,10 @@ service = gitlab
 gitlab.login = andonome
 gitlab.token = @oracle:eval:pass gitlab-token
 gitlab.host = gitlab.com
-gitlab.owner = True
 gitlab.project_template = {{"bind." ~ project}}
 gitlab.description_template = {{"#"~gitlabnumber~":"~" "~gitlabtitle}}
 gitlab.include_todos = False
 gitlab.default_priority = L
-static_fields = gitlabdescription, gitlabtitle
 gitlab.include_repos = bindrpg/core, bindrpg/judgement, bindrpg/stories, bindrpg/config, bindrpg/oneshot, bindrpg/mim, bindrpg/metabind, bindrpg/aif
 gitlab.import_labels_as_tags = True
 
@@ -26,12 +23,10 @@ service = gitlab
 gitlab.login = andonome
 gitlab.token = @oracle:eval:pass gitlab-token
 gitlab.host = gitlab.com
-gitlab.owner = True
 gitlab.project_template = {{"bind.blag"}}
 gitlab.description_template = {{"#"~gitlabnumber~":"~" "~gitlabtitle}}
 gitlab.include_todos = False
 gitlab.default_priority = L
-static_fields = gitlabtitle
 gitlab.include_repos = bindrpg/bindrpg.gitlab.io
 gitlab.import_labels_as_tags = True
 
@@ -44,7 +39,6 @@ gitlab.include_repos = andonome/artblocks
 gitlab.default_priority = L
 gitlab.project_template = {{"mem.artblocks"}}
 gitlab.description_template = {{"#"~gitlabnumber~":"~" "~gitlabtitle}}
-static_fields = gitlabdescription, gitlabtitle
 gitlab.import_labels_as_tags = True
 
 [assorted]
@@ -55,9 +49,7 @@ gitlab.host = gitlab.com
 gitlab.include_repos = decentralna/kitchcalc
 gitlab.default_priority = L
 gitlab.description_template = {{"#"~gitlabnumber~":"~" "~gitlabtitle}}
-static_fields = gitlabdescription, gitlabtitle
 gitlab.import_labels_as_tags = True
-#gitlab.owner = True
 
 [gitlab_groups]
 service = gitlab
@@ -68,5 +60,4 @@ gitlab.default_priority = L
 gitlab.only_if_assigned = andonome
 gitlab.description_template = {{"#"~gitlabnumber~":"~" "~gitlabtitle}}
 gitlab.include_repos = chroniclesrpg/chronicles-core, ludologists/hexbind
-static_fields = gitlabdescription, gitlabtitle
 
