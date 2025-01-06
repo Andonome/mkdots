@@ -113,6 +113,9 @@ function slow(){
 	( cat $ff | perl -We 'use Time::HiRes;$|++;while(read(STDIN,$c,1)){Time::HiRes::usleep(15000);print $c;}' )& exec &> $ff
 }
 
+
+urldecode(){ : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+
 repcheck(){
 	[ -z "$1" ] && target=md || target="$1"
 	grep -r --color=always --include="*.tex" --include="*.$target" -E '(\b\S+\b)\s+\b\1\b' .
