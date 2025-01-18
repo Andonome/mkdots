@@ -72,7 +72,7 @@ lfcd () {
 }
 
 # Aliases
-alias ll='eza -AlF --group-directories-first'
+alias ll='eza -AFgl --group-directories-first'
 alias e=exit
 alias sl=sleep
 alias v='vim  -p'
