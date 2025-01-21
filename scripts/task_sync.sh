@@ -1,18 +1,15 @@
 #!/bin/sh
 
-<<<<<<< HEAD
-task sync
-=======
 TMP=/tmp/task
 
-remote=splint.rs
+remote=nimbus
 
 remove_task_sync_mount(){
     fusermount3 -u "$TMP"
     rmdir "$TMP"
 }
 
-trap remove_task_sync_mount 1
+trap remove_task_sync_mount 4
 
 set -e
 
@@ -21,9 +18,9 @@ set -e
 sshfs "$remote":.local/share/task "$TMP"
 test -e "$TMP"/taskchampion-local-sync-server.sqlite3 && task sync && sync || {
     echo Failed to mount tasks
+    remove_task_sync_mount
     command -v logger >/dev/null && logger "Failed to mount tasks"
-    exit 1
+    exit 4
 }
 
 remove_task_sync_mount
->>>>>>> origin/master
