@@ -3,12 +3,11 @@
 data.location=~/.local/state/
 sync.local.server_dir=/tmp/task
 hooks.location=~/.config/task/hooks
-
 urgency.inherit=1
-recurrence=on
 urgency.blocking.coefficient=0
 urgency.blocked.coefficient=0
 
+recurrence=off
 # No. tasks before nag
 bulk=5
 
@@ -38,7 +37,7 @@ report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +P
 
 weekstart=Monday
 
-news.version=3.2.0
+news.version=3.3.0
 # Bugwarrior UDAs
 uda.gitlabtitle.type=string
 uda.gitlabtitle.label=Gitlab Title
