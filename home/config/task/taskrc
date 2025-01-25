@@ -41,7 +41,7 @@ report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +P
 
 weekstart=Monday
 
-news.version=3.3.0
+news.version=3.3.1
 # Bugwarrior UDAs
 uda.gitlabtitle.type=string
 uda.gitlabtitle.label=Gitlab Title
