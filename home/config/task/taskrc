@@ -16,13 +16,17 @@ include ~/.config/task/local.rc
 
 include /usr/share/doc/task/rc/dark-gray-256.theme
 color=on
+color.project.wedding=yellow
+color.project.irish=green
+color.tag.hunt=red
+
 avoidlastcolumn=1
 limit=page
 defaultwidth=95
 defaultheight=80
 
 calendar.holidays=full
-color.project.wedding=yellow
+
 calendar.details=full
 calendar.details.report=list
 calendar.monthsperline=2
