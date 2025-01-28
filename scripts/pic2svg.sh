@@ -45,7 +45,7 @@ else
     magick "$1" -flatten "$name".ppm
 fi
 
-potrace -s "$name".ppm -o svg1.svg
+potrace --tight -ns "$name".ppm -o svg1.svg
 
 svgcleaner svg1.svg svg2.svg
 svgcleaner svg2.svg "$name".svg
