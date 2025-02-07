@@ -4,6 +4,10 @@ set show-mode-in-prompt on
 set vi-ins-mode-string "  "
 set vi-cmd-mode-string " "
 
+set match-hidden-files off
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
 set keymap vi-insert
 
 "\C- ": shell-expand-line
@@ -12,3 +16,5 @@ Control-g: "g\n"
 Control-y: "| ccze\n"
 Control-o: "\C-u lfcd\n\C-u"
 Control-l: "\C-u clear -x && ls\n"
+
+set keymap vi
