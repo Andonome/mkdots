@@ -1,7 +1,7 @@
 #!/bin/sh
 
 command -v youtube-dl 2&1>/dev/null && dl=youtube-dl
-command -v yt-dlp >/dev/null && dl=yt-dlp
+command -v yt-dlp >/dev/null && dl='yt-dlp' && options='-ic --embed-metadata'
 
 
 mkdir -p ~/vids
@@ -12,7 +12,7 @@ download_listed_video_then_remove_from_list(){
     do
         count=$(( count + 1 ))
         if [ "$count" -lt 3 ]; then
-            $dl "$link" && \
+            $dl $options "$link" && \
             line="$(echo $link | sed 's#/#\\/#g')" && \
             sed -i "/$line/d" .list 
         fi
