@@ -2,13 +2,16 @@
 
 set -e
 
+[ -z "$1" ] && target_files="$(dir *.md)" || \
+    target_files="$@"
+
 art2db () 
 { 
-    title="$(lowdown -X title "$1" | jq -r || echo None in $1)";
-    date="$(lowdown -X date "$1" | cut -dT -f1)";
-    wc="$(wc -w "$1" | cut -d' ' -f1)";
-    tags="$(lowdown -X tags "$1" | jq -r '.[]')";
+    title="$(lowdown -X title "$1" | jq -r || echo None in $1)"
+    date="$(lowdown -X date "$1" | cut -dT -f1)"
+    tags="$(lowdown -X tags "$1" | jq -r '.[]')"
     content="$(sed '1,5d' "$1")"
+    wc="$(wc -w "$1" | cut -d' ' -f1)"
 
     recins -f Title -v "$title" \
         -f File -v "$1" \
@@ -24,7 +27,7 @@ art2db ()
     echo articles.rec >> .git/info/exclude
 )
 
-for file in *.md; do
+for file in $target_files ; do
     count="$(recsel -e "File = '${file}'" -c articles.rec)"
     test "$count" -eq "1" || art2db "$file"
 done
