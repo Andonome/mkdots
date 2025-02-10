@@ -25,7 +25,7 @@ select_episode(){
 }
 
 play_episode(){
-	mpv --no-terminal "$(plocate "$selection")" || {
+	mpv --no-terminal "$(plocate "$selection" | head -1)" || {
         echo cannot find "$selection"
         exit 1
     }
