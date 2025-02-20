@@ -4,16 +4,22 @@ output: .default
 
 include $(wildcard extra/*.mk)
 
-default += $(live_configs) $(live_scripts)
+default += $(live_home) $(live_configs) $(live_scripts)
 
-repo_configs != find home/ -mindepth 1 -type f
-live_configs = $(patsubst home/%,$(HOME)/.%,$(repo_configs))
-$(HOME)/.%: home/%
+repo_home != find home/ -mindepth 1 -type f
+live_home = $(patsubst home/%, $(HOME)/.%, $(repo_home))
+$(live_home): $(HOME)/.%: home/%
+	@mkdir -p $(@D)
+	$(CP) $< $@
+
+repo_configs != find config/ -mindepth 1 -type f
+live_configs = $(patsubst config/%, $(HOME)/.config/%, $(repo_configs))
+$(live_configs): $(HOME)/.config/%: config/%
 	@mkdir -p $(@D)
 	$(CP) $< $@
 
 repo_scripts = $(wildcard scripts/*)
-live_scripts = $(patsubst scripts/%,$(HOME)/.local/bin/%,$(repo_scripts))
+live_scripts = $(patsubst scripts/%, $(HOME)/.local/bin/%, $(repo_scripts))
 $(HOME)/.local/bin/%: scripts/%
 	mkdir -p $(@D)
 	$(CP) $< $@
