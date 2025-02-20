@@ -1,3 +1,0 @@
-#!/bin/bash
-rm ~/.local/share/calcurse/caldav/lock
-CALCURSE_CALDAV_PASSWORD="$(/usr/bin/pass show cal.splint.rs)" /usr/bin/calcurse-caldav
