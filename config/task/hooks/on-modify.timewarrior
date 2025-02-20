@@ -78,7 +78,7 @@ def main(old, new):
     if 'end' in new and 'end' not in old:
         if 'deleted' not in new['status']:
             import os
-            os.system('$HOME/.scripts/ring.sh >/dev/null 2>&1 &')
+            os.system('$HOME/.local/bin/ring.sh >/dev/null 2>&1 &')
 
     # Started task.
     if 'start' in new and 'start' not in old:
