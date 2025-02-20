@@ -24,5 +24,8 @@ $(gitignore): $(ignored)
 
 default += $(gitignore)
 
+.PHONY: secrets
+secrets: $(secrets)
+
 .PHONY: .default
 .default: $(default)
