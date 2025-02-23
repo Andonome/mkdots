@@ -48,7 +48,7 @@ y|summr(y)'
 		timew lengthen @$2 @"$3"mins
 		;;
 		m)
-		timew sum :month
+		timew sum :month :ids
 		;;
 		M)
 		timew move @$2 $3
