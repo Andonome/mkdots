@@ -20,7 +20,9 @@ $(live_configs): $(HOME)/.config/%: config/%
 
 repo_scripts = $(wildcard scripts/*)
 live_scripts = $(patsubst scripts/%, $(HOME)/.local/bin/%, $(repo_scripts))
-$(HOME)/.local/bin/%: scripts/%
+$(HOME)/.locale/bin/:
+	mkdir -p $@
+$(live_scripts): $(HOME)/.local/bin/%: scripts/% | $(HOME)/.locale/bin/
 	mkdir -p $(@D)
 	$(CP) $< $@
 
