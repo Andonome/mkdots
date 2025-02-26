@@ -1,7 +1,12 @@
-set scrolloff 5
+#clean-database-on-startup true
+status-messages-count-limit 90
+item-limit 30
+item-limit-important true
+menu-feed-sorting unread-desc
+menu-item-sorting unread-desc
 set download-timeout 6
-set scrolloff 4
-set reload-period 1440
+reload-period 1440
+
 bind ^P mark-unread-all
 bind m mark-read; exec mpv --no-terminal "%l" &
 bind ^o mark-read; exec mpv "%l"
