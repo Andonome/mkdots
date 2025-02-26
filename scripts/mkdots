@@ -2,4 +2,4 @@
 cd $HOME/.dots || exit 1
 git diff --quiet || { git add -p && git commit && git push ;}
 git fetch && git diff --quiet || git merge origin/all -mautomatic\ update
-make
+make -s
