@@ -163,6 +163,7 @@ function fin(){
 
 alias send='export DISPLAY=0;notify-send'
 alias z='zathura "$(ls -S *.pdf | head -n1 )" &>/dev/null & disown'
+alias h='urxvtc -cd $(pwd)'
 
 alias f=lfrun
 alias SS="sudo systemctl"
