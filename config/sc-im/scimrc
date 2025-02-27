@@ -1,0 +1,4 @@
+set autowrap
+nmap "<C-h>" ":prevsheet<cr>"
+nmap "<C-l>" ":nextsheet<cr>"
+nmap "<C-n>" ":newsheet \"\"<LEFT>"
