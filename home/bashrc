@@ -54,7 +54,7 @@ fi
 # enable color support of ls and grep
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='eza --icons=auto --group-directories-first'
+    alias ls='eza -x --icons=auto --group-directories-first'
     alias grep='grep --color=auto -I'
 fi
 
