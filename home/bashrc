@@ -136,7 +136,7 @@ function sendtext(){
 }
 
 function gimme (){
-	echo "$1" >> ~/vids/.list
+	echo "$1" >> ~/.cache/vidlist.txt
 }
 
 function g(){
