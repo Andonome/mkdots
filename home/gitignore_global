@@ -5,3 +5,4 @@ priv*
 tmp
 *.swp
 .unison*.tmp
+.gemstore/
