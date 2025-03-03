@@ -43,6 +43,10 @@ done
 
 shift "$(($OPTIND -1))"
 
+dead_link_error(){
+    echo "$1" >> "$missing_file"
+}
+
 find_markdown_link(){
     sed '/```/,//d' "$1" | \
     grep -Po '\[[^ ]+\]\(\K[^ )]+'
@@ -74,7 +78,7 @@ sort_url_types(){
 }
 
 check_gemini_link(){
-	gemget --max-time "$timeout" "$1" -o- >/dev/null || echo "$1"  >> "$missing_file"
+	gemget --max-time "$timeout" "$1" -o- >/dev/null || dead_link_error "$1"
 }
 
 download_gemini_page(){
@@ -92,11 +96,11 @@ find_gemini_link(){
 }
 
 check_http_link(){
-	curl --connect-timeout "$timeout" -Is "$1" >/dev/null || echo "$1"  >> "$missing_file"
+	curl --connect-timeout "$timeout" -Is "$1" >/dev/null || dead_link_error "$1"
 }
 
 check_file_link(){
-	[ -f "$1" ] || echo "$1" >> "$missing_file"
+	[ -f "$1" ] || dead_link_error "$1"
 }
 
 check_if_markdown(){
@@ -110,6 +114,8 @@ check_if_markdown(){
 
 ####################
 
+rm -f "$missing_file"
+
 [ -z "$target_dir" ] || cd "$target_dir"
 
 if [ "$process_everything" = "true" ]; then
@@ -119,13 +125,16 @@ else
 fi
 
 for x in $targets; do
-	check_if_markdown "$x" && (
+	check_if_markdown "$x" && {
         find_markdown_link "$x" | while read -r line; do
             [ -z "$DEBUG" ] || echo checking "$line"
             sort_into_url_or_file "$line"
         done &
 		find_gemini_link "$x"
-    ) || (
+    } || {
         echo "$x is not markdown"
-    )
+    }
 done
+
+[ ! -f "$missing_file" ] || { echo Error: missing files >&2 && cat "$missing_file" >&2 ;}
+
