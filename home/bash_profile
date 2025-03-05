@@ -8,3 +8,9 @@ if [ "$(fgconsole 2>/dev/null || echo -1)" -eq 1 ] && [ $UID -eq 1000 ] && [ -z 
     then
     startx
 fi
+
+# Normal pager for remote logins
+[ -z "$SSH_CLIENT" ] || {
+    export PAGER='less -R'
+    export MANPAGER='less -R'
+}
