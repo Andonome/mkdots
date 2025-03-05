@@ -16,6 +16,7 @@ path=pro
 path=.w3m/bookmark.html
 
 path=.local/share/calcurse
+path=.local/share/newsraft
 
 path=.local/share/contacts
 path=.local/state/task
