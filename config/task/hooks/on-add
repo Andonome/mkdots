@@ -2,13 +2,15 @@
 
 read new_task
 
-echo 'on-add'
-
 no="$(task rc.verbose:nothing rc.confirmation:no rc.hooks:off +READY count)"
 
 [ "$no" -lt "300" ] || {
     echo "$no is too many tasks!"
     exit 1
 }
+
+echo $new_task
+
+echo 'on-add'
 
 exit 0
