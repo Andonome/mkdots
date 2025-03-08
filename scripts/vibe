@@ -13,6 +13,7 @@ random_visual(){
     case "$r" in
     1)
     showme journalctl --user -e
+    showme journalctl --user -eo cat -n 42
     ;;
     2)
     timeout $(ranno)m top
