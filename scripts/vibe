@@ -12,7 +12,6 @@ random_visual(){
     r=$(ranno 8)
     case "$r" in
     1)
-    showme journalctl --user -e
     showme journalctl --user -eo cat -n 42
     ;;
     2)
