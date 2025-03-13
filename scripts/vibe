@@ -6,7 +6,7 @@ showme(){
     timeout --foreground --preserve-status $(ranno 8)m watch $@
 }
 
-alias task="task rc.verbose:nothing rc.confirmation:no rc.hooks:off"
+alias task="task rc.verbose:nothing rc.confirmation:no rc.hooks:off rc.gc=0"
 
 random_visual(){
     r=$(ranno 8)
