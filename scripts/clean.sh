@@ -45,12 +45,7 @@ sleep 3
 
 date +%F > /tmp/last-clean
 
-cd ~/.dots
-git fetch
-git merge origin/master -m'automatic dot update'
-git push
-make
-cd ~
+mkdots
 
 update_as_so(){
 	[ $(command -v $1) ] && (
