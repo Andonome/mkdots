@@ -1,5 +1,5 @@
 #clean-database-on-startup true
-status-messages-count-limit 90
+#status-messages-count-limit 90
 item-limit 30
 item-limit-important true
 menu-feed-sorting unread-desc
@@ -10,7 +10,7 @@ reload-period 1440
 bind ^P mark-unread-all
 bind m mark-read; exec mpv --no-terminal "%l" &
 bind ^o mark-read; exec mpv "%l"
-bind V mark-read; exec echo "%l" >> ~/vids/.list
+bind V mark-read; exec echo "%l" >> ~/.cache/vidlist.txt
 bind o mark-read; exec xdg-open "%l"
 bind w mark-read; exec w3m "%l"
 bind E exec $EDITOR ~/.config/newsraft/feeds
