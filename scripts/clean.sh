@@ -45,7 +45,7 @@ sleep 3
 
 date +%F > /tmp/last-clean
 
-mkdots
+~/.local/bin/mkdots
 
 update_as_so(){
 	[ $(command -v $1) ] && (
