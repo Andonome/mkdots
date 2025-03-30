@@ -218,10 +218,6 @@ function tram () {
 alias scim='sc-im'
 alias up='unison pi||unison pir'
 
-#Fun
-alias cm='cmatrix -absC white||ncmatrix;exit'
-alias starwars="telnet towel.blinkenlights.nl"
-
 #Scripts
 alias scr='clear;fastfetch'
 alias bn="gio trash"
@@ -232,22 +228,14 @@ alias t=task
 alias tn='clear;task next'
 alias ta='task add'
 alias tan='task add due:eod-"$(task count due:tod)"h'
-alias tat='task add due:now+20h until:due+14d'
-function tc(){
-	[ -z $1 ] && task context ||\
-	task context "$1" && \
-	export tc="$1"
-	tcon
-}
+alias tat='task add wait:now+9h sch:wait+9h due:wait+18h until:due+14d'
 alias tm='task modify'
 alias tur='task add due:eod priority:M start:now'
-alias tau='task add until:eod due:eod'
 alias tcal='clear;task calendar'
-alias tl='clear;task list'
 alias tp='clear;task projects'
 alias tt='clear;task +DUE or +OVERDUE or scheduled:tomorrow or scheduled:today'
 alias td='clear;task next +ACTIVE or +OVERDUE or due:today or scheduled:today or pri:H'
-alias trol="task due:yes status:pending modify due:tod"
+alias trol="task due:yes status:pending modify due:eod"
 alias tno='tasknotes.sh'
 alias tsh='tasknotes.sh -s'
 alias tal='task add dep:"$(task +LATEST uuids)"'
