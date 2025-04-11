@@ -8,6 +8,7 @@ log = false
 ignore=Name temp.*
 ignore=Name *pid
 ignore=Name *.tmp
+ignore=Name node_modules
 
 path=rec
 path=.map
