@@ -7,6 +7,7 @@ menu-item-sorting unread-desc
 set download-timeout 6
 reload-period 1440
 
+bind ^D mark-read-all
 bind ^P mark-unread-all
 bind m mark-read; exec mpv --no-terminal "%l" &
 bind ^o mark-read; exec mpv "%l"
