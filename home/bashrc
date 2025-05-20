@@ -227,7 +227,8 @@ alias strpic='exiftool -all:all= -r'
 alias t=task
 alias tn='clear;task next'
 alias ta='task add'
-alias tan='task add due:eod-"$(task count due:tod)"h'
+alias tan='task add due:2h+"$(task count due:tod)"h'
+alias tanl='task add due:2h+"$(task count due:tod)"h dep:"$(task +LATEST uuids)"'
 alias tat='task add wait:now+9h sch:wait+9h due:wait+18h until:due+14d'
 alias tm='task modify'
 alias tur='task add due:eod priority:M start:now'
@@ -239,7 +240,6 @@ alias trol="task due:yes status:pending modify due:eod"
 alias tno='tasknotes.sh'
 alias tsh='tasknotes.sh -s'
 alias tal='task add dep:"$(task +LATEST uuids)"'
-alias tanl='task add due:now+2h dep:"$(task +LATEST uuids)"'
 alias tah='task add +tmp unt:+24h due:eod'
 
 function ts(){
