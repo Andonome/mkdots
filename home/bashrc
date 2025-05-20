@@ -55,7 +55,7 @@ fi
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='eza -x --icons=auto --group-directories-first'
-    alias grep='grep --color=auto -I'
+    alias grep='grep --color=auto -I --directories=recurse'
 fi
 
 # Bindings
