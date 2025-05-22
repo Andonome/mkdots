@@ -10,6 +10,8 @@ file_name="$(basename $file_path)"
 
 url="$(rofi -i -p 'URL' -dmenu)"
 
+url="$(echo "${url}" | cut -d '&' -f1)"
+
 echo "$url" | grep -q '://' || ( rofi -e "Badly formatted URL" && exit 1 )
 
 if [ "$(grep "$url" "$file_path")" ]; then
