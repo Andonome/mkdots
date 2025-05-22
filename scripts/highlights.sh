@@ -8,7 +8,7 @@ file_dir="$(dirname $file_path)"
 
 file_name="$(basename $file_path)"
 
-url="$(rofi -i -dmenu)"
+url="$(rofi -i -p 'URL' -dmenu)"
 
 echo "$url" | grep -q '://' || ( rofi -e "Badly formatted URL" && exit 1 )
 
@@ -17,7 +17,7 @@ if [ "$(grep "$url" "$file_path")" ]; then
 		exit 1
 fi
 
-description="$(rofi -i -dmenu)"
+description="$(rofi -i -p 'Description' -dmenu)"
 [ ! -z "$description" ]
 
 echo "[$description]($url)" >> "$file_path"
