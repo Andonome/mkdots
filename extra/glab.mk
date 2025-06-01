@@ -2,10 +2,10 @@ token_name = gitlab-token
 
 $(HOME)/.config/glab-cli/config.yml: $(HOME)/.password-store/$(token_name).gpg
 	pass $(token_name) | glab auth login --stdin
-	glab config set editor ${VISUAL}
-	glab config set check_update false
-	glab config set browser qutebrowser
-	glab config set display_hyperlinks false
+	glab config --global set editor ${VISUAL}
+	glab config --global set check_update false
+	glab config --global set browser qutebrowser
+	glab config --global set display_hyperlinks false
 
 $(HOME)/.config/glab-cli/aliases.yml:
 	glab alias set c 'issue list'
