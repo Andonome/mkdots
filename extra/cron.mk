@@ -4,8 +4,9 @@ default += cron.txt
 ignored += cron.txt
 
 cron.txt: $(wildcard extra/cron/*)
-	cat $^ > $@
+	cat $^ >> $@
 	grep -q '^PATH'   $@ || sed -i "1 i PATH=$(PATH)" $@
 	grep -q '^HOME'   $@ || sed -i "1 i HOME=$(HOME)" $@
 	grep -q '^MAILTO' $@ || sed -i "1 i MAILTO=$(USER)" $@
+	sed -i "2 i\ " $@
 	crontab cron.txt
