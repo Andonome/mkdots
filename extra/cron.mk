@@ -1,4 +1,4 @@
-### Ucomment to use the makefile.
+### Uncomment to use the makefile.
 default += cron.txt
 
 ignored += cron.txt
