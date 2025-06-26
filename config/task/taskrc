@@ -14,7 +14,6 @@ recurrence=off
 bulk=5
 
 default.command=next
-include ~/.config/task/local.rc
 
 include /usr/share/doc/task/rc/dark-gray-256.theme
 color=on
@@ -83,3 +82,5 @@ uda.gitlabnamespace.label=Gitlab Namespace
 uda.gitlabweight.type=numeric
 uda.gitlabweight.label=Gitlab Weight
 # END Bugwarrior UDAs
+
+include ~/.config/task/local.rc
