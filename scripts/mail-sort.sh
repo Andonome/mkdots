@@ -25,7 +25,7 @@ check_subs(){
     for src in $SUBLIST; do
         sanity_check
         grep -lP "^From: .*$src" "$INBOX"/* | while read -r mail; do
-            mv "$mail" "$SUBS"
+            mv "$mail" "${SUBS%.*}"
         done
     done
 }
@@ -35,7 +35,7 @@ check_spam(){
     for src in $SPAM; do
         sanity_check
         grep -l "header.from=$src" "$INBOX"/* | while read -r mail; do
-            mv "$mail" "$RUBBISH"
+            mv "$mail" "$RUBBISH%.*"
         done
     done
 }
