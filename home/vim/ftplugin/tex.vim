@@ -2,6 +2,7 @@ set tabstop=2 expandtab shiftwidth=2
 set indentexpr=
 
 set spell
+syntax spell toplevel
 
 map ,r  :w<Enter> :!pdflatex "%" <Enter>
 map ,m  :wa<Enter> :!make <Enter>
