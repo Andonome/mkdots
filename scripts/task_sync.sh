@@ -9,7 +9,7 @@ remove_task_sync_mount(){
     rmdir "$TMP"
 }
 
-trap remove_task_sync_mount 4
+trap remove_task_sync_mount 1
 
 set -e
 
