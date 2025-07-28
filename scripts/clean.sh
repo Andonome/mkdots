@@ -87,6 +87,6 @@ update_as_so yay "-Syu"
 
 update_as_so flatpak update
 
-update_as_so bugwarrior-pull ""
+update_as_so bugwarrior pull
 
 update_as_so dysk ""
