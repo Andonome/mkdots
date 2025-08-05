@@ -34,7 +34,6 @@ path=.tmux.conf
 path=.config/qutebrowser
 ignore=Name .config/qutebrowser/webengine
 
-path=.gitconfig
 path=kn
 
 path=.config/aerc
