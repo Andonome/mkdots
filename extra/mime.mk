@@ -2,12 +2,16 @@
 default += $(HOME)/.local/share/mime
 
 checklist += xdg-mime
-dross += $(local_mimetype_files) $(HOME)/.local/share/mime $(HOME)/.config/mimeapps.list
+default += $(HOME)/.local/share/mime/packages
+default += $(HOME)/.local/share/applications/mimeapps.list
 
 repo_mimetype_files = $(wildcard home/local/share/applications/*.desktop)
 local_mimetype_files = $(patsubst home/%,$(HOME)/.%,$(repo_mimetype_files))
 
 $(local_mimetype_files): $(repo_mimetype_files)
+
+$(HOME)/.local/share/applications/mimeapps.list: $(HOME)/.config/mimeapps.list
+	ln -sf $< $@
 
 $(HOME)/.config/mimeapps.list: $(local_mimetype_files)
 	xdg-mime default vim.desktop text/plain
@@ -38,7 +42,7 @@ $(HOME)/.config/mimeapps.list: $(local_mimetype_files)
 	xdg-mime default amfora.desktop x-scheme-handler/gemini
 	xdg-mime default aerc.desktop x-scheme-handler/mailto
 
-$(HOME)/.local/share/mime: $(HOME)/.config/mimeapps.list
+$(HOME)/.local/share/mime/packages: $(HOME)/.config/mimeapps.list
 	mkdir -p $@
-	update-mime-database $@
+	update-mime-database $(@D)
 
