@@ -9,8 +9,6 @@ set show-all-if-ambiguous on
 set show-all-if-unmodified on
 set colored-stats on
 
-set keymap vi-insert
-
 "\C- ": shell-expand-line
 "\C-x": glob-expand-word
 Control-g: "g\n"
