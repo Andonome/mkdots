@@ -83,7 +83,7 @@ update_as_sudo apt-get dist-upgrade
 update_as_sudo xbps-install "-Syu"
 
 
-update_as_so yay "-Syu"
+update_as_so yay "-Syu --noconfirm"
 
 update_as_so flatpak update
 
