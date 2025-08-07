@@ -31,8 +31,8 @@ path=.config/himalaya
 path=.config/weechat
 path=.tmux.conf
 
-path=.config/qutebrowser
-ignore=Name .config/qutebrowser/webengine
+path=.config/qutebrowser/bookmarks
+path=.config/qutebrowser/quickmarks
 
 path=kn
 
