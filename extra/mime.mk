@@ -11,6 +11,7 @@ local_mimetype_files = $(patsubst home/%,$(HOME)/.%,$(repo_mimetype_files))
 $(local_mimetype_files): $(repo_mimetype_files)
 
 $(HOME)/.local/share/applications/mimeapps.list: $(HOME)/.config/mimeapps.list
+	@mkdir -p $(@D)
 	ln -sf $< $@
 
 $(HOME)/.config/mimeapps.list: $(local_mimetype_files)
