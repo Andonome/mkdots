@@ -9,18 +9,23 @@ remove_task_sync_mount(){
     rmdir "$TMP"
 }
 
+mount_task_server(){
+    df -t fuse.sshfs | grep -q "$TMP" || \
+    sshfs "$remote":.local/share/task "$TMP"
+}
+
+sync_tasks(){
+    test -e "$TMP"/taskchampion-local-sync-server.sqlite3 && task rc.gc:off rc.hooks:off sync && sync 
+}
+
 trap remove_task_sync_mount 1
 
 set -e
 
 [ -d "$TMP" ] || mkdir -m700 "$TMP"
 
-sshfs "$remote":.local/share/task "$TMP"
-test -e "$TMP"/taskchampion-local-sync-server.sqlite3 && task rc.gc:off rc.hooks:off sync && sync || {
-    echo Failed to mount tasks
-    remove_task_sync_mount
-    command -v logger >/dev/null && logger "Failed to mount tasks"
-    exit 4
-}
+mount_task_server
+
+sync_tasks
 
 remove_task_sync_mount
