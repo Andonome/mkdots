@@ -40,7 +40,9 @@ get_channel_name(){
 get_feed_line(){
 	get_feed_url
 	CHANNEL_NAME="$(get_channel_name)" && rm "$TMPFILE"
-	echo "$FEED_URL \"$CHANNEL_NAME\" "
+	echo "URL: $FEED_URL"
+	echo "Name: $CHANNEL_NAME"
+    echo "Category: Video"
 }
 
 ####################
