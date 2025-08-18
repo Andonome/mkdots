@@ -9,26 +9,49 @@ art2db ()
 { 
     title="$(lowdown -X title "$1" | jq -r || echo None in $1)"
     date="$(lowdown -X date "$1" | cut -dT -f1)"
-    tags="$(lowdown -X tags "$1" | jq -r '.[]')"
-    content="$(sed '1,5d' "$1")"
-    wc="$(wc -w "$1" | cut -d' ' -f1)"
+    tags="$(lowdown -X tags "$1" | jq -r '.[]' | sed 's/./Tag: &/')"
+    content="$(sed '0,/---/d;1,/---/d; 1,/^$/d' "$1" | sed '0,/.*/n;  s/^/+ /g')"
+    wc="$(echo "$content" | wc -w )"
 
-    recins -f Title -v "$title" \
-        -f File -v "$1" \
-        -f Date -v "$date" \
-        -f Tags -v "$tags" \
-        -f WC -v "$wc" \
-        -f Content -v "${content}" \
-        articles.rec
+echo "$db
+
+Title: $title
+File: $1
+Date: $date
+$tags
+Content: $content
+"
 }
+
+pick_article(){
+    title="$(recsel -t Post articles.rec -CP Title | $FZY )" && \
+        recsel -t Post articles.rec -e "Title = '${title}'" -P Content | $PAGER
+}
+
+###############
+
+for fuzzy in sk fzf fzy; do
+    command -v $fuzzy >/dev/null && \
+        FZY=$fuzzy && \
+        break
+done
 
 [ -f articles.rec ] || (
     touch articles.rec
     echo articles.rec >> .git/info/exclude
 )
 
-for file in $target_files ; do
-    count="$(recsel -e "File = '${file}'" -c articles.rec)"
-    test "$count" -eq "1" || art2db "$file"
-done
+[ ! -f .git/info/exclude ] || \
+    grep -q articles.rec .git/info/exclude || \
+    echo articles.rec >> .git/info/exclude
 
+{
+    printf '%s\n\n' '%rec: Post'
+
+    for file in $target_files ; do
+        art2db "$file"
+    done
+
+} | recsel -d | tee articles.rec | recinf
+
+[ -z "$FZY" ] || pick_article
