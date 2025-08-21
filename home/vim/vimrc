@@ -3,6 +3,9 @@ vim9script
 # better command-line completion
 set wildoptions+=fuzzy
 set wildmenu
+set incsearch
+set laststatus=1
+
 
 colorscheme elflord
 
