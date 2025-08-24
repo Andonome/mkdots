@@ -27,7 +27,6 @@ set fillchars=eob:\ ,
 # remove background colour from colourscheme
 autocmd BufRead,BufNewFile * hi Normal ctermbg=NONE
 autocmd BufRead,BufNewFile * hi EndOfBuffer ctermbg=NONE
-autocmd BufRead,BufNewFile * hi MatchParen cterm=bold ctermbg=none
 
 # change highlights
 
