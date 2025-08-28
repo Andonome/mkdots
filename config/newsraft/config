@@ -1,6 +1,6 @@
 #clean-database-on-startup true
 #status-messages-count-limit 90
-item-limit 30
+item-limit 60
 item-limit-important true
 menu-feed-sorting unread-desc
 menu-item-sorting unread-desc
