@@ -61,6 +61,8 @@ hi SpellRare cterm=underline
 map ,v :vsp\|ter<Enter>
 map ,t :vert terminal <Enter>
 map ,T :terminal <Enter>
+map ,m :make <Enter>
+map ,M :terminal ++close make <Enter>
 
 # ask about saving instead of just failing
 set confirm

@@ -5,8 +5,6 @@ set spell
 syntax spell toplevel
 
 map ,r  :w<Enter> :!pdflatex "%" <Enter>
-map ,m  :wa<Enter> :!make <Enter>
-map ,M  :wa<Enter> :!make
 nnoremap ,lat :-1read $HOME/.vim/skel/lat.tex<CR>7j
 nnoremap ,char :-1read $HOME/.vim/skel/bindCharacter.tex<CR>2f{a
 nnoremap ,anim :-1read $HOME/.vim/skel/bindAnimal.tex<CR>2f{a
