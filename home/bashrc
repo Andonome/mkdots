@@ -62,6 +62,9 @@ fi
 
 alias fdcmd='history | grep -oP "[0-9] \K.*" | sk --tac --no-sort'
 
+# Allow python to use readline
+export PYTHON_BASIC_REPL=true
+
 lfcd () {
     if [ -z "$LF_LEVEL" ]; then
         cd "$(command lfrun -print-last-dir "$@")"
