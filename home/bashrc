@@ -60,8 +60,7 @@ fi
 
 # Bindings
 
-alias fdcmd='fc -s $(history | sk --tac --no-sort | grep -oP "[0-9]*" && printf "")'
-bind -m vi-command -x '"\C-r": fdcmd'
+alias fdcmd='history | grep -oP "[0-9] \K.*" | sk --tac --no-sort'
 
 lfcd () {
     if [ -z "$LF_LEVEL" ]; then
