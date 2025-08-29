@@ -142,10 +142,9 @@ function gimme (){
 }
 
 function g(){
-	[ -z $1 ] && \
-	[ -e ~/.cache/index ] && cd ~/"$(sk -c "cat ~/.cache/index")" \
-	|| \
-	cd "$(grep g$1 ~/.map | awk '{print $4}' | sed s#~#$HOME#)"
+	[ ! -z $1 ] && dest="$(grep g$1 ~/.map | awk '{print $4}' | sed s#~#$HOME#)" || \
+    [ -e ~/.cache/index ] && dest="$(sk -c "cat ~/.cache/index")" && \
+    [ -n "$dest" ] && cd -P "$dest"
 }
 
 function down(){
