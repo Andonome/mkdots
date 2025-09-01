@@ -10,6 +10,7 @@ ignore=Name *pid
 ignore=Name *.tmp
 ignore=Name node_modules
 ignore=Name rubbish
+ignore=Name svg-inkscape
 ignore=Name public
 
 path=rec
