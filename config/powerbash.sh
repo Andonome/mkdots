@@ -133,30 +133,16 @@ __powerbash() {
   }
 
   __powerbash_colors() {
-    if (( $(tput colors) < 256 )); then
-      # 8 color support
-      COLOR_USER="\[$(tput setaf 7)\]\[$(tput setab 0)\]"
-      COLOR_SUDO="\[$(tput setaf 3)\]\[$(tput setab 0)\]"
-      COLOR_SSH="\[$(tput setaf 3)\]\[$(tput setab 0)\]"
-      COLOR_DIR="\[$(tput setaf 7)\]\[$(tput setab 0)\]"
-      COLOR_GIT="\[$(tput setaf 7)\]\[$(tput setab 4)\]"
-      COLOR_RC="\[$(tput setaf 7)\]\[$(tput setab 1)\]"
-      COLOR_JOBS="\[$(tput setaf 7)\]\[$(tput setab 5)\]"
-      COLOR_SYMBOL_USER="\[$(tput setaf 7)\]\[$(tput setab 2)\]"
-      COLOR_SYMBOL_ROOT="\[$(tput setaf 7)\]\[$(tput setab 1)\]"
-    else
-      # 256 color support
-      COLOR_USER="\[$(tput setaf 15)\]\[$(tput setab 8)\]"
-      COLOR_SUDO="\[$(tput setaf 3)\]\[$(tput setab 8)\]"
-      COLOR_SSH="\[$(tput setaf 3)\]\[$(tput setab 8)\]"
-      COLOR_DIR="\[$(tput setaf 7)\]\[$(tput setab 8)\]"
-      COLOR_GIT="\[$(tput setaf 15)\]\[$(tput setab 4)\]"
-      COLOR_RC="\[$(tput setaf 15)\]\[$(tput setab 9)\]"
-      COLOR_JOBS="\[$(tput setaf 15)\]\[$(tput setab 5)\]"
-      COLOR_PY_VIRTUALENV="\[$(tput setaf 15)\]\[$(tput setab 5)\]"
-      COLOR_SYMBOL_USER="\[$(tput setaf 15)\]\[$(tput setab 2)\]"
-      COLOR_SYMBOL_ROOT="\[$(tput setaf 15)\]\[$(tput setab 1)\]"
-    fi
+    # 8 color support
+    COLOR_USER="\[$(tput setaf 7)\]\[$(tput setab 0)\]"
+    COLOR_SUDO="\[$(tput setaf 3)\]\[$(tput setab 0)\]"
+    COLOR_SSH="\[$(tput setaf 3)\]\[$(tput setab 0)\]"
+    COLOR_DIR="\[$(tput setaf 7)\]\[$(tput setab 0)\]"
+    COLOR_GIT="\[$(tput setaf 7)\]\[$(tput setab 4)\]"
+    COLOR_RC="\[$(tput setaf 7)\]\[$(tput setab 1)\]"
+    COLOR_JOBS="\[$(tput setaf 7)\]\[$(tput setab 5)\]"
+    COLOR_SYMBOL_USER="\[$(tput setaf 7)\]\[$(tput setab 2)\]"
+    COLOR_SYMBOL_ROOT="\[$(tput setaf 7)\]\[$(tput setab 1)\]"
   }
 
   __powerbash_py_virtualenv_display() {
