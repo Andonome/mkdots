@@ -9,7 +9,7 @@ INBOXES="$(find . -type d -iname inbox -exec printf ' {}'/cur ';')"
 SUBS="$MAILDIR/Subs/new/"
 RUBBISH="$MAILDIR/Trash/new"
 
-eval "$(cat $MAILDIR/sort.txt)" || exit 404
+. "$MAILDIR"/sort.txt
 
 sanity_check(){
     [ "$(echo $src | wc -c)" -gt 5 ]
@@ -25,7 +25,8 @@ check_subs(){
     for src in $SUBLIST; do
         sanity_check
         grep -lP "^From: .*$src" "$INBOX"/* | while read -r mail; do
-            mv "$mail" "${SUBS%.*}"
+            name="$(basename "${mail%.*}")"
+            mv "$mail" "$MAILDIR/Subs/new/$name"
         done
     done
 }
