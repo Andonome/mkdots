@@ -2,7 +2,7 @@
 
 TMP=/tmp/task
 
-remote=nimbus
+remote=splint.rs
 
 remove_task_sync_mount(){
     fusermount3 -u "$TMP"
