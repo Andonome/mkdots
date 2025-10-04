@@ -80,7 +80,7 @@ alias sl=sleep
 alias v='vim  -p'
 alias vv='file="$(sk --preview="$PAGER {} --color=always" -c "find -L * -maxdepth 4 -type f")" && vim "$file"'
 alias suv='sudo -e'
-alias zzz='[ -x "$(type -P systemctl)" ] && sudo systemctl suspend || sudo zzz -z'
+alias zzz='[ -x "$(type -P systemctl)" ] && systemctl suspend || sudo zzz -z'
 alias xd='xdotool key'
 
 # autocompletion
