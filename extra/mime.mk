@@ -1,5 +1,5 @@
 ### Ucomment to use the makefile.
-default += $(HOME)/.local/share/mime
+default += $(HOME)/.local/share/mime/
 
 checklist += xdg-mime
 default += $(HOME)/.local/share/mime/packages

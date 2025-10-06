@@ -26,6 +26,9 @@ $(live_scripts): $(HOME)/.local/bin/%: scripts/% | $(HOME)/.local/bin/
 	mkdir -p $(@D)
 	$(CP) $< $@
 
+%/:
+	mkdir -p $@
+
 gitignore = .git/info/exclude
 $(gitignore): $(ignored)
 	echo $(ignored) | tr ' ' '\n' > $@
