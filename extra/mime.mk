@@ -14,7 +14,7 @@ $(HOME)/.local/share/applications/mimeapps.list: $(HOME)/.config/mimeapps.list
 	@mkdir -p $(@D)
 	ln -sf $< $@
 
-$(HOME)/.config/mimeapps.list: $(local_mimetype_files)
+$(HOME)/.config/mimeapps.list: $(local_mimetype_files) | $(HOME)/.config/
 	xdg-mime default vim.desktop text/plain
 	xdg-mime default vim.desktop text/x-tex
 	xdg-mime default vim.desktop text/x-makefile
