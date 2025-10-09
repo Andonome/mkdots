@@ -10,7 +10,7 @@ remove_task_sync_mount(){
 }
 
 mount_task_server(){
-    df -t fuse.sshfs | grep -q "$TMP" || \
+    df -t fuse.sshfs 2>/dev/null | grep -q "$TMP" || \
     sshfs "$remote":.local/share/task "$TMP"
 }
 
