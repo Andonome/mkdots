@@ -229,12 +229,10 @@ alias strpic='exiftool -all:all= -r'
 alias t=task
 alias tn='clear;task next'
 alias ta='task add'
-alias tan='task add due:2h+"$(task count due:tod)"h'
+alias tan='task add due:2h+"$(task count +OVERDUE)"h'
 alias tanl='task add due:2h+"$(task count due:tod)"h dep:"$(task +LATEST uuids)"'
 alias tat='task add wait:now+9h sch:wait+9h due:wait+18h until:due+14d'
 alias tm='task modify'
-alias tur='task add due:eod priority:M start:now'
-alias tcal='clear;task calendar'
 alias tp='clear;task projects'
 alias tt='clear;task +DUE or +OVERDUE or scheduled:tomorrow or scheduled:today'
 alias td='clear;task next +ACTIVE or +OVERDUE or due:today or scheduled:today or pri:H'
@@ -242,7 +240,7 @@ alias trol="task due:yes status:pending modify due:eod"
 alias tno='tasknotes.sh'
 alias tsh='tasknotes.sh -s'
 alias tal='task add dep:"$(task +LATEST uuids)"'
-alias tah='task add +tmp unt:+24h due:eod'
+alias tah='task add +fast +tmp unt:+24h due:2h+"$(task count +OVERDUE)"h'
 
 function ts(){
 	task start $1
