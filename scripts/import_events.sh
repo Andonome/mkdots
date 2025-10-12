@@ -12,14 +12,10 @@ CALDATA=~/.local/share/calcurse/apts
 cp "$CALDATA" "$CALDATA".bak
 
 get_events(){
-		curl -s "$1" | sed '/DTEND/d' > "$TMP"
-		calcurse -qi "$TMP"
-}
-
-deduplicate_events(){
-		sort "$CALDATA" | uniq > "$TMP"
-		mv "$TMP" "$CALDATA"
+		curl -s "$1" | calcurse -q -i - -c "$TMP"
+        grep -vf "$CALDATA" "$TMP" >> "$CALDATA" || true
 }
 
 get_events "$1"
-deduplicate_events
+
+rm "$TMP"
