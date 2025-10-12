@@ -26,7 +26,7 @@ shopt -s autocd
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=100000
-HISTFILESIZE=20000
+HISTFILESIZE=100000
 HISTFILE=$HOME/.cache/bash_history
 alias hst='export HISTFILE="$PWD"/.bash_history'
 
