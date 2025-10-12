@@ -8,8 +8,6 @@ timeout 2 curl -s wttr.in/Moon
 	( task +tmp delete 
 	task +tmp purge )
 
-import_events.sh https://dmz.rs/events.ical
-
 $HOME/.local/bin/clean.sh
 
 logfile="$(ls /tmp/CLEAN-* | head -n1)"
