@@ -14,6 +14,6 @@ bind ^o mark-read; exec mpv "%l"
 bind V mark-read; exec echo "%l" >> ~/.cache/vidlist.txt
 bind o mark-read; exec xdg-open "%l"
 bind w mark-read; exec w3m "%l"
-bind E exec $EDITOR ~/.config/newsraft/feeds
+bind E exec $EDITOR ~/rec/feeds.rec && make -C ~/rec/ feeds
 bind C exec $EDITOR ~/.config/newsraft/config
 bind M exec man newsraft
