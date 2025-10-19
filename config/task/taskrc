@@ -15,7 +15,7 @@ bulk=5
 
 default.command=next
 
-include /usr/share/doc/task/rc/dark-gray-256.theme
+include colours.theme
 color=on
 color.project.wedding=yellow
 color.project.irish=green
