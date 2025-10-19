@@ -54,7 +54,9 @@ fi
 # enable color support of ls and grep
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='eza -x --icons=auto --group-directories-first'
+    alias ls='lsd --group-directories-first '
+    alias ll='lsd -li --group-directories-first --header --git'
+    alias ll='eza -glAF --group-directories-first'
     alias grep='grep --color=auto -I'
 fi
 
@@ -74,7 +76,6 @@ lfcd () {
 }
 
 # Aliases
-alias ll='eza -glAF --group-directories-first'
 alias e=exit
 alias sl=sleep
 alias v='vim  -p'
