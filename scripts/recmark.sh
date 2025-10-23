@@ -10,7 +10,7 @@ art2db ()
     title="$(lowdown -X title "$1" | jq -r || echo None in $1)"
     date="$(lowdown -X date "$1" | cut -dT -f1)"
     tags="$(lowdown -X tags "$1" | jq -r '.[]' | sed 's/./Tag: &/')"
-    content="$(sed '0,/---/d;1,/---/d; 1,/^$/d' "$1" | sed '0,/.*/n;  s/^/+ /g')"
+    content="$(sed '0,/---/d;1,/---/d' "$1" | sed '0,/.*/n;  s/^/+ /g')"
     wc="$(echo "$content" | wc -w )"
 
 echo "$db
