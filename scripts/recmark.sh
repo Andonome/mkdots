@@ -11,16 +11,13 @@ art2db ()
     date="$(lowdown -X date "$1" | cut -dT -f1)"
     tags="$(lowdown -X tags "$1" | jq -r '.[]' | sed 's/./Tag: &/')"
     content="$(sed '0,/---/d;1,/---/d' "$1" | sed '0,/.*/n;  s/^/+ /g')"
-    wc="$(echo "$content" | wc -w )"
+    wc="$(printf "%s" "$content" | wc -w )"
 
-echo "$db
-
-Title: $title
+printf "\n%s\n" "Title: $title
 File: $1
 Date: $date
 $tags
-Content: $content
-"
+Content: $content"
 }
 
 pick_article(){
@@ -46,7 +43,7 @@ done
     echo articles.rec >> .git/info/exclude
 
 {
-    printf '%s\n\n' '%rec: Post'
+    printf '\n\n%s\n\n' '%rec: Post'
 
     for file in $target_files ; do
         art2db "$file"
