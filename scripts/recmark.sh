@@ -16,6 +16,7 @@ art2db ()
 printf "\n%s\n" "Title: $title
 File: $1
 Date: $date
+Wordcount: $wc
 $tags
 Content: $content"
 }
