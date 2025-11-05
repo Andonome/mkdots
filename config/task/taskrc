@@ -32,7 +32,7 @@ calendar.holidays=full
 calendar.details=full
 calendar.details.report=list
 calendar.monthsperline=2
-due=2
+due=5
 
 uda.reviewed.type=date
 uda.reviewed.label=Reviewed
