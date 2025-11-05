@@ -1,3 +1,5 @@
+set statusline+=%{wordcount().words}\ words
+
 set tabstop=2 expandtab shiftwidth=2
 set indentexpr=
 
