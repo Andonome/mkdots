@@ -7,6 +7,7 @@ set statusline+=%3*\%.25f
 set statusline+=%3*\:\ 
 set statusline+=%3*\%c-\%l/%L\ 
 set statusline+=%3*\%y
+set statusline+=\ %{wordcount().words}\ words
 
 function! StatuslineMode()
     let l:mode=mode()
