@@ -10,7 +10,7 @@ set laststatus=1
 colorscheme elflord
 
 set cursorline
-autocmd BufRead,BufNewFile,TerminalOpen * hi CursorLine cterm=underline ctermbg=none
+autocmd BufRead,BufNewFile,TerminalOpen,TermChanged * hi CursorLine cterm=underline ctermbg=none
 
 # stop vi compatibility
 set nocompatible
