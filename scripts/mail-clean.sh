@@ -3,7 +3,7 @@
 set -u
 set -e
 
-cd ~/Mail
+cd $MAIL
 
 mailbox="${1:-Trash}"
 no_weeks="${2:-12}"

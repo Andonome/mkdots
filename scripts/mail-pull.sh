@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 pgrep gpg-agent || exit 0
 
 # We'll need to display messages later.
@@ -18,7 +20,7 @@ boxes="INBOX BIND/Inbox Pro/Inbox"
 countmail(){
 	count=0
 	for x in $boxes; do
-		current_folder=$(ls ~/Mail/"$x"/cur | wc -l)
+		current_folder=$(ls "$MAIL/$x"/cur | wc -l)
 		count=$(( count + current_folder ))
 	done
 	echo $count
@@ -52,9 +54,9 @@ fi
 
 if [ "$newno" -gt "$oldno" ]; then
 	for b in $boxes; do
-		for x in $(ls ~/Mail/$b/cur)
+		for x in $(ls $MAIL/$b/cur)
 		do
-			email="$(grep -Po '^From: (.+ <)?\K(\w+@\w+.\w+)' ~/Mail/$b/cur/"$x")"
+			email="$(grep -Po '^From: (.+ <)?\K(\w+@\w+.\w+)' "$MAIL/$b/cur/$x")"
 			if [ "$(khard "$email")" != 'Found no contacts' ];then
 				notify-send "E-mail" "$email"
 				sleep 2

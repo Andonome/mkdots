@@ -2,7 +2,7 @@
 
 set -u
 
-MAILDIR=~/Mail
+MAILDIR=${MAIL}
 cd "$MAILDIR"
 
 INBOXES="$(find . -type d -iname inbox -exec printf ' {}'/cur ';')"

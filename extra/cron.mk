@@ -11,5 +11,6 @@ ifneq (${DISPLAY},)
 endif
 	grep -q '^PATH'   $@ || sed -i "1 i PATH=$(PATH)" $@
 	grep -q '^HOME'   $@ || sed -i "1 i HOME=$(HOME)" $@
+	grep -q '^MAIL'   $@ || sed -i "1 i MAIL=$(MAIL)" $@
 	grep -q '^MAILTO' $@ || sed -i "1 i MAILTO=$(USER)" $@
 	crontab cron.txt
