@@ -142,11 +142,10 @@ function gimme (){
 	echo "$1" >> ~/.cache/vidlist.txt
 }
 
-function g(){
-	[ -z $1 ] && \
-	[ -e ~/.cache/index ] && cd ~/"$(sk -c "cat ~/.cache/index")" \
-	|| \
-	cd "$(grep g$1 ~/.map | awk '{print $4}' | sed s#~#$HOME#)"
+g (){
+    [ -z $1 ] && [ -e ~/.cache/index ] && {
+        ! dest="$(sk -c "cat ~/.cache/index")" || cd ~/"$dest"
+    } || cd "$(grep g$1 ~/.map | awk '{print $4}' | sed s#~#$HOME#)"
 }
 
 function down(){
