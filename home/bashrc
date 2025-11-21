@@ -159,13 +159,10 @@ function down(){
 alias venv='command -v deactivate && deactivate || { [ -d venv ] || virtualenv venv && source venv/bin/activate ; }'
 
 function fin(){
-	[ -z "$1" ] && msg="Is finish"
-	notify-send "$msg"
+	notify-send "${1:-is finish}"
 }
 
-alias send='export DISPLAY=0;notify-send'
 alias z='zathura "$(ls -S *.pdf | head -n1 )" &>/dev/null & disown'
-alias h='urxvtc -cd $(pwd)'
 
 alias f=lfrun
 alias SS="sudo systemctl"
