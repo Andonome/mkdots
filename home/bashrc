@@ -56,7 +56,6 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='lsd --group-directories-first '
     alias ll='lsd -li --group-directories-first --header --git'
-    alias ll='eza -glAF --group-directories-first'
     alias grep='grep --color=auto -I'
 fi
 
