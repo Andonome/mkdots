@@ -189,7 +189,6 @@ alias cmus='cmus --listen /tmp/cmus'
 
 alias prof='profanity;e'
 alias mpv='mpv --geometry=1400'
-alias yt='ytfzf -t --detach --search-again'
 alias myip='dig +short myip.opendns.com @resolver$((RANDOM % 4 + 1)).opendns.com'
 alias tra='transmission-remote -l'
 alias traa='sudo systemctl start transmission && transmission-remote -a'
