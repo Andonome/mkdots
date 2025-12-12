@@ -48,13 +48,13 @@ date +%F > /tmp/last-clean
 ~/.local/bin/mkdots
 
 update_as_so(){
-	[ $(command -v $1) ] && (
+	! [ "$(command -v $1)" ] || (
 		$1 $2 || say "Problem updating with $1" | tee -a "$logfile"
 	)
 }
 
 update_as_sudo(){
-	[ $(command -v $1) ] && (
+	! [ "$(command -v $1)" ] || (
 		sudo $1 $2 || say "Problem updating with $1" | tee -a "$logfile"
 	)
 }
