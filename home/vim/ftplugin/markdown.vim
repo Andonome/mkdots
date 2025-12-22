@@ -1,8 +1,8 @@
 colorscheme slate
 
-set laststatus=2
+setlocal laststatus=2
 
 map ,` o```<Enter>```<Esc>kA
-set tabstop=4 expandtab shiftwidth=4
+setlocal tabstop=4 expandtab shiftwidth=4
 
-set spell
+setlocal spell

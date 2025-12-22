@@ -1,3 +1,3 @@
 colorscheme  blue
-set noswapfile
-set nobackup
+setlocal noswapfile
+setlocal nobackup

@@ -3,10 +3,10 @@ autocmd BufRead argadd *.tex
 " ...then remove them.
 autocmd BufRead argdel *.tex
 
-set tabstop=2 expandtab shiftwidth=2
-set indentexpr=
+setlocal tabstop=2 expandtab shiftwidth=2
+setlocal indentexpr=
 
-set spell
+setlocal spell
 syntax spell toplevel
 
 map ,r  :w<Enter> :!pdflatex "%" <Enter>
