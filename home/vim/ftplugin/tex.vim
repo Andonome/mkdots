@@ -1,3 +1,8 @@
+" Include files in buffer for autocomplete...
+autocmd BufRead argadd *.tex
+" ...then remove them.
+autocmd BufRead argdel *.tex
+
 set tabstop=2 expandtab shiftwidth=2
 set indentexpr=
 
