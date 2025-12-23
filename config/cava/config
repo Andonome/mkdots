@@ -1,0 +1,13 @@
+[general]
+
+
+framerate = 30
+
+[input]
+
+method = pulse
+source = auto
+
+[output]
+
+orientation = top
