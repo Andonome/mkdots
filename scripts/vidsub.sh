@@ -2,22 +2,20 @@
 
 set -e
 
+db=~/rec/feeds.rec
+
+rec="${2:-$db}"
+
 [ ! -z "$1" ] || {
     echo "Give me a youtube URL"
     exit 1
 }
 
-URL="$1"
+[ -w "$rec" ] || touch "$rec"
 
-CHANNEL_ID="$(curl -s "$URL" | tr ',' '\n'  | grep -Po 'channelId":"\K[\w+-]+' | tail -1)"
-FEED_URL="https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID"
-CHANNEL_NAME="$(curl -s "$FEED_URL" | grep -m 1 -Po 'title\>\K[\w\s]+')"
+CHANNEL_ID="$(curl -s "$1" | tr ',' '\n'  | grep -Po 'channelId":"\K[\w+-]+' | tail -1)"
+URL="https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID"
+Name="$(curl -s "$URL" | grep -m 1 -Po 'title\>\K[\w\s]+')"
 
-#printf '%s "%s"\n' "$FEED_URL" "$CHANNEL_NAME"
+recins --verbose -t Feed -f Name -v "${Name}" -f URL -v "${URL}" -f Category -v Videos -f Rating -v 3 -f Working -v yes "$rec"
 
-echo ""
-echo "URL: $FEED_URL"
-echo "Name: $CHANNEL_NAME"
-echo "Category: Videos"
-echo "Rating: 3"
-echo "Working: yes"
