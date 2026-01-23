@@ -66,6 +66,10 @@ alias fdcmd='history | grep -oP "[0-9] \K.*" | sk --tac --no-sort'
 # Allow python to use readline
 export PYTHON_BASIC_REPL=true
 
+command -v systemctl >/dev/null && \
+    alias SS="sudo systemctl" || \
+    alias SS="sudo sv" || \
+
 lfcd () {
     if [ -z "$LF_LEVEL" ]; then
         cd "$(command lfrun -print-last-dir "$@")"
@@ -164,7 +168,6 @@ function fin(){
 alias z='zathura "$(ls -S *.pdf | head -n1 )" &>/dev/null & disown'
 
 alias f=lfrun
-alias SS="sudo systemctl"
 alias re='exec bash'
 
 # Package Managers
@@ -191,7 +194,7 @@ alias prof='profanity;e'
 alias mpv='mpv --geometry=1400'
 alias myip='dig +short myip.opendns.com @resolver$((RANDOM % 4 + 1)).opendns.com'
 alias tra='transmission-remote -l'
-alias traa='sudo systemctl start transmission && transmission-remote -a'
+alias traa='SS start transmission && transmission-remote -a'
 alias tral='transmission-remote -l | grep -v 100'
 function traf (){
 	sudo systemctl start transmission
