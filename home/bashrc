@@ -266,7 +266,7 @@ alias grs='git reset --hard HEAD'
 alias gpa='git remote show  | while read remote; do git remote get-url $remote | grep -qv http && git push $remote; done'
 
 # Weather
-alias wet="curl https://splint.rs/share/wet"
+alias wet="curl https://splint.rs/wet"
 alias wetl="curl wttr.in/"
 alias wett="curl v2.wttr.in"
 alias moon="clear;curl wttr.in/Moon"
