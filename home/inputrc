@@ -14,7 +14,7 @@ set colored-stats on
 "\C-x": glob-expand-word
 Control-g: "g\C-m"
 Control-y: "| ccze\C-m"
-Control-o: "${ lfcd ;}\C-e\C-m"
+Control-o: " cd $(lfrun -print-last-dir "$@")\C-e\C-m\r"
 Control-l: "\C-u clear -x && ls\n"
 "\C-r": "$(fdcmd)\C-e"
 
