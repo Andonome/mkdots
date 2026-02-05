@@ -261,7 +261,7 @@ alias gu='git pull'
 alias gs='git status'
 alias gl='git log --graph --show-signature'
 alias gb='git branch'
-alias gco='git checkout --recurse-submodules $(sk -c "git branch | cut -c 3-")'
+alias gco='git checkout "$(sk -c 'git branch | cut -c 3- ' --preview='git show {}' )"'
 alias grs='git reset --hard HEAD'
 alias gpa='git remote show  | while read remote; do git remote get-url $remote | grep -qv http && git push $remote; done'
 
