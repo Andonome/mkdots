@@ -5,7 +5,7 @@
 # If you haven't set up transmission before, install it (it's usually called 'transmission-cli'.
 # The default download directory can be changed below, or edit '/var/lib/transmission/.config/transmission-daemon/settings.json' and change 'download-dir' line, and remove the last line in this script.)
 
-urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+urldecode() { echo -e "${@//%/\\x}"; }
 
 source=leet
 
