@@ -7,7 +7,7 @@ auto_redirect = true
 http = '/usr/bin/qutebrowser'
 
 # Any URL that will accept a query string can be put here
-search = "gemini://auragem.letz.dev/search/s?"
+search = "gemini://kennedy.gemi.dev/search"
 
 color = true
 ansi = true
