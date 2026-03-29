@@ -1,6 +1,6 @@
 [a-general]
 # Press Ctrl-H to access it
-home = "gemini://auragem.letz.dev"
+home = "gemini://gemi.dev"
 
 auto_redirect = true
 
