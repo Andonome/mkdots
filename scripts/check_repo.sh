@@ -5,12 +5,14 @@ command -v tellme.sh >/dev/null ||  {
     exit 1
 }
 
-[ -z "$1" ] && {
-    echo Give me a git repo path.
-    exit 1
+get_list_of_repos(){
+    test -f "$1" && file "$1" | grep -q text && targets="$(cat "$1")" || {
+        test -d "$1"/.git && targets="$@"
+    } || {
+        echo no repos specified
+        exit 1
+    }
 }
-
-repo="$1"
 
 no_change_in_repo(){
     response="$(timeout 5 git -C "$repo" fetch --porcelain 2>/dev/null)" && \
@@ -23,7 +25,12 @@ note_repo_change(){
     git -C "$repo" show origin/HEAD --quiet --format=reference
 }
 
+
 ###############
 
-no_change_in_repo "$1" || note_repo_change | tellme.sh
+get_list_of_repos "$1"
+
+for repo in $targets; do
+    no_change_in_repo "$repo" || note_repo_change | tellme.sh
+done
 
