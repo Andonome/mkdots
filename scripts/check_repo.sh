@@ -15,8 +15,7 @@ get_list_of_repos(){
 }
 
 no_change_in_repo(){
-    response="$(timeout 5 git -C "$repo" fetch --porcelain 2>/dev/null)" ||
-    break && \
+    response="$(timeout 5 git -C "$repo" fetch --porcelain 2>/dev/null)" || break && \
     echo "$response" | grep -v -q ref
 }
 
