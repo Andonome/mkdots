@@ -15,7 +15,8 @@ get_list_of_repos(){
 }
 
 no_change_in_repo(){
-    response="$(timeout 5 git -C "$repo" fetch --porcelain 2>/dev/null)" && \
+    response="$(timeout 5 git -C "$repo" fetch --porcelain 2>/dev/null)" ||
+    break && \
     echo "$response" | grep -v -q ref
 }
 
@@ -31,6 +32,7 @@ note_repo_change(){
 get_list_of_repos "$1"
 
 for repo in $targets; do
-    no_change_in_repo "$repo" || note_repo_change | tellme.sh
+    no_change_in_repo "$repo" || note_repo_change | tellme.sh &
 done
 
+wait
