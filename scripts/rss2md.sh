@@ -1,31 +1,32 @@
 #!/bin/sh
 
-[ -z "$1" ] && echo "Which rss feed?" && exit 1
+set -e
+
+[ ! -z "$1" ] || { echo "Which rss feed?" && exit 1 ;}
 
 no_lines=${2:-80}
 
-test -f "$1" && feed="$(cat "$1")" || \
-    {
-        test "$(printf "%s" "$1" | head -c 4)" = http && feed="$(curl -s "$1")"
-    } || \
-    {
-        echo "This never normally happens to me."
-        exit 1
-    }
+RSStoMarkdown(){
+    sed -nr 's/.*<title>(.*)<\/.*/\n**\1**/p ; s/.*<pub\w+>([^+<]+).*/- \1/p ; s/.*<updated>([^+<]+).*/- \1/p' \
+    | sed 's/&amp;/\&/g'
+}
 
-echo "$feed" | tail -n +8 | \
-    grep -E -m "$no_lines" -e '<title>' -e '<updated>'  | \
-    awk '{getline x; print x;}1' | \
-    sed -r -e 's/<\w+>//' \
-        -e 's/<\/\w+>//' \
-        -e 's/Z$//' \
-        -e 's/&amp;quot;/"/g' | \
-    while read line; do
-        if [ -z "$pub_time" ]; then
-            pub_time="$line"
-        else
-            echo "- **$pub_time** - $line"
-            unset pub_time
-        fi
-    done
+get_http_feed(){
+    curl -s -L "$1" | RSStoMarkdown
+}
 
+use_file_feed(){
+    test -f "$1" && RSStoMarkdown < "$1"
+}
+
+show_feed(){
+    echo "${1%%:*}" | grep -q http && get_http_feed "$1" || use_file_feed "$1" \
+        || { echo "What is $1?" && exit 1 ;}
+}
+
+######
+
+
+for feed in $@; do 
+    show_feed "$feed"
+done
