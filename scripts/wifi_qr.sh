@@ -1,19 +1,17 @@
-#!/bin/bash
+#!/bin/sh
 
-wpa_cli list_networks | grep '\[CURRENT\]' && \
-networkNo=$(wpa_cli list_networks | grep '\[CURRENT\]' | cut -f1) \
-|| networkNo=$(wpa_cli list_networks | rofi -i -dmenu | cut -f1)
+wiDB=~/rec/wifi.rec
 
+set -e
 
-ssid=$(wpa_cli get_network $networkNo ssid | tail -n1 | sed 's/"//g')
+ssid=$(iw dev | grep -Po '\s+ssid \K.*')
 
-psk=$(grep -A2 "$ssid" /etc/wpa_supplicant/* | grep 'psk=' | cut -d= -f2 | sed 's/"//g')
+pass="$(recsel "$wiDB" -t wifi -e "name = \"${ssid}\"" -CP password)"
 
-# qrencode command 
-qrencode -s 6 -l H -o "/tmp/wifi.png" "WIFI:T:WPA;S:<$wifiname>;P:<$wifipass>;;"
+test "${#pass}" -gt 3
+qrencode -s 6 -l H -o "/tmp/wifi.png" "WIFI:T:WPA;S:<$ssid>;P:<$pass>;;"
 
 echo "$ssid"
 echo "$psk"
 
-# display img with sxiv 
-sxiv /tmp/wifi.png
+xdg-open /tmp/wifi.png && rm /tmp/wifi.png
