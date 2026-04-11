@@ -1,69 +1,50 @@
 #!/bin/sh
 
-db=torrents.rec
+set -e
 
-[ -e "$db" ] || echo "
-%rec: Torrent
-%key: Name
-%sort: Type
-%mandatory: Name
-%mandatory: Hash
-%type: Hash,Trackers int
-" > "$db"
+db=~/rec/torrents.rec
 
-count_trackers () 
-{ 
-    h="$(recsel -t Torrent torrents.rec -n $1 -P Hash | sed 's/0x//')";
-    n="$(transmission-remote -t $h -it | grep Tracker -c)";
-    recset -t Torrent "$db" -e "Hash = '0x${h}'" -f Trackers -S "$n"
+check_db(){
+    [ -f "$db" ] || sed 's/^ *//' > "$db" << EOF
+    %rec: Torrent
+    %key: Hash
+    %sort: Type
+    %mandatory: Name
+    %mandatory: Hash
+    %type: Hash int
+    %type: Ratio real
+    %type: Name,Type line
+EOF
 }
 
-number_of_torrents="$(recsel -t Torrent "$db" -c)"
-
-count_all_trackers(){
-    total="$(( number_of_torrents - 1 ))"
-    for i in $(seq 0 $total); do
-        count_trackers "$i"
-    done
+format_torrent_info(){
+    {
+        echo 'Name,Hash,Size,Ratio'
+        transmission-remote -t $1 -j -i \
+        | jq -r '.result.torrents.[] | [.name, "0x" + .hash_string, .total_size, .upload_ratio] | @csv'
+    } | csv2rec
 }
 
-seeker=${FUZZY:-sk}
-
-chosen_torrent="$(transmission-remote -l | sk | awk '{print $1}' )"
-
-info="$(transmission-remote -t "$chosen_torrent" -i)"
-
-name="$(echo "$info" |\
-    sed -n 's/[_.]/ /g ; /Name: /s/^  Name: //p '
-    )"
-
-size="$(echo "$info" |\
-    awk '/Total size:/ {print $3, $4}' \
-    )"
-
-hash="$(echo "$info" |\
-    sed -n 's/  Hash: /0x/p'
-    )"
-
-category="$(echo "$info" |\
-    sed -n 's/  Location: //p'
-    )"
-
-category="$(basename $category)"
-
-place_choice(){
-    echo ""
-    echo "Name: $name"
-    echo "Hash: $hash"
-    echo "Type: $category"
-    echo "Size: $size"
+insert_torrent(){
+    torrent_info="$(format_torrent_info "$1")"
+    printf '\n%s\n' "$torrent_info" | recfix \
+    && printf '\n%s\n' "$torrent_info" | tee -a "$db" | recsel -p 'Name:Added'
 }
 
-count_hashes(){
-    recsel "$db" --expression "Hash = '${hash}'" -c
-}
+##############
 
-[ "$(count_hashes "$chosen_torrent")" -gt "0" ] && echo Already got $name || \
-    place_choice "$chosen_torrent" >> "$db"
+check_db
 
-count_all_trackers
+fuzzy="$(command -v fzy fzf sk | tail -1)"
+
+name="$(transmission-remote -j --list | jq -r '.result.torrents.[].name' | $fuzzy )"
+
+id="$(transmission-remote -j --list | jq --arg name "$name" '.result.torrents.[] | select(.name == $name) | .id')"
+
+hash="0x$(transmission-remote -t $id -j -i | jq -r '.result.torrents.[].hash_string')"
+
+torrent_count="$(recsel "$db" -t Torrent -e "Hash = '${hash}'" -c )"
+
+test $torrent_count -gt 0 && echo "We already got one" || insert_torrent "$id"
+
+recfix --sort "$db"
