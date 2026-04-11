@@ -11,7 +11,7 @@ check_local(){
 
 check_remote(){
 		package="$(tlmgr search --global --file "/$1.sty$"  | grep ':$' | sed 's/://')"
-		[ -z "$package" ] && printf "problem: cannot find '''$1'''" || \
+		[ -z "$package" ] && printf "problem: cannot find '${1}'\n" || \
 		printf "$package\n" >> $install_list
 }
 
@@ -23,7 +23,7 @@ install_all(){
 }
 
 get_list_of_required_packages_from_file(){
-    grep -e RequirePackage -e usepackage "$1"  | grep -oP '{\K\w+}' | sed 's/}//'
+    grep -Po '(RequirePackage|usepackage).*{\K[^ }]+' "$1"
 }
 
 and_check_if_they_are_installed_or_can_be(){
@@ -34,7 +34,7 @@ and_check_if_they_are_installed_or_can_be(){
 
 get_list_of_required_packages_from_file "$1" | and_check_if_they_are_installed_or_can_be
 
-if [ -f "$install_list" ]; then
+if [ "$(wc -l < $install_list" -gt 0 ]; then
 	printf "\n\n===========\nNeed to install these files:\n\n"
 	cat "$install_list"
     read -p 'Proceed?  ' reply
