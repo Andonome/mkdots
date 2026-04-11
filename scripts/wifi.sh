@@ -1,5 +1,7 @@
 #!/bin/bash
 
+wiDB=~/rec/wifi.rec
+
 wpa_cli scan
 
 rofi -e 'Scanning'
@@ -37,3 +39,8 @@ else
 fi
 wpa_cli enable_network $netno
 wpa_cli save_config
+
+test -f "$wiDB" && {
+    test "$(recsel -t wifi "$wiDB" -e "name = \"${ssid}\"" -c)" -gt 0 \
+    || recins -t wifi "$wiDB" -f name -v "${ssid}" -f password -v "${password}"
+}
