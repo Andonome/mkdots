@@ -12,6 +12,6 @@ test "${#pass}" -gt 3
 qrencode -s 6 -l H -o "/tmp/wifi.png" "WIFI:T:WPA;S:<$ssid>;P:<$pass>;;"
 
 echo "$ssid"
-echo "$psk"
+echo "$pass"
 
 xdg-open /tmp/wifi.png && rm /tmp/wifi.png
