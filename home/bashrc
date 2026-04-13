@@ -112,6 +112,8 @@ b(){
 	eval "cd $(for d in $(seq 1 $1); do printf ../; done)"
 }
 
+PS1='{$?} \A < \W > \$ '
+
 function slow(){
 	ff=/tmp/bashpipe_$(date +%s)
     powerbash prompt system
