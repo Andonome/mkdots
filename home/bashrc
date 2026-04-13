@@ -121,6 +121,10 @@ function slow(){
 	( cat $ff | perl -We 'use Time::HiRes;$|++;while(read(STDIN,$c,1)){Time::HiRes::usleep(15000);print $c;}' )& exec &> $ff
 }
 
+csv2md(){
+    column -o '|' -ts, "$1" \
+    | sed -r '0,/./p ; 0,/./s/[a-zA-Z ]/-/g; 0,/^|/s/\|-/|:/g'
+}
 
 urldecode(){ : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 
