@@ -1,0 +1,17 @@
+defaults
+tls on
+tls_starttls on
+auth on
+logfile ~/.cache/msmtp.log
+
+account home
+host {{smtp}}
+port 587
+user {{email}}
+from "{{name}}" <{{email}}>
+passwordeval pass email
+tls on
+tls_starttls on
+auth on
+
+account default : home
