@@ -13,7 +13,7 @@ find_links(){
 check_link(){
     while read link; do
         if [ "${link##*:*}" ]; then
-            check_file "$link" "$file"
+            check_file "$link"
         else
             prefix="${link%%:*}"
             case "${prefix}" in 
@@ -40,17 +40,15 @@ dead_link_error(){
 
 check_file(){
     path="${1#/}"
-    path="${path%#*}"
+    path="${path#./}"
+    test "$path" != "${path##*.*}" || path="$path".md
     test -f "$path" \
-    || test -f "$path".md \
-    || (
-        cd "$(dirname "$2")" && \
-        test -f "$path" || test -f "$path".md
-    )
+    || test "$(find . -type f -name "$path" | wc -l)" -eq 1 \
+    || test "$(find . -type f -name "$(basename $path)" | wc -l)" -eq 1
 }
 
 check_gemini_link(){
-	gemget --max-time "$timeout" "$1" -o- >/dev/null
+	gemget -q --max-time "$timeout" "$1" -o- >/dev/null
 }
 
 check_http_link(){
