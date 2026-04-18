@@ -1,5 +1,8 @@
 #!/bin/sh
 
+name="$(git config user.name)"
+reponame="$(basename "$repo")"
+
 command -v tellme.sh >/dev/null ||  {
     echo This script needs the tellme.sh script.
     exit 1
@@ -19,10 +22,13 @@ no_change_in_repo(){
     echo "$response" | grep -v -q ref
 }
 
+check_my_commit(){
+git show origin/HEAD --quiet --format="%an" | grep -q "$name"
+}
 
 note_repo_change(){
-    basename "$repo"
-    git -C "$repo" show origin/HEAD --quiet --format=reference
+    git -C "$repo" show origin/HEAD --quiet --format="$reponame: %an
+    %f: %b"
 }
 
 
@@ -31,7 +37,7 @@ note_repo_change(){
 get_list_of_repos "$1"
 
 for repo in $targets; do
-    no_change_in_repo "$repo" || note_repo_change | tellme.sh &
+    no_change_in_repo "$repo" || check_my_commit || note_repo_change | tellme.sh &
 done
 
 wait
