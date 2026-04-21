@@ -5,8 +5,6 @@ set vi-ins-mode-string "  "
 set vi-cmd-mode-string " "
 
 set match-hidden-files off
-set show-all-if-ambiguous on
-set show-all-if-unmodified on
 set colored-stats on
 
 "\C- ": shell-expand-line
