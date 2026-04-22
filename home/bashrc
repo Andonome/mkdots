@@ -8,7 +8,8 @@ case $- in
       *) return;;
 esac
 
-[ -n "$PAGER" ] || PAGER='less -R'
+[ -n "$PAGER" ] || PAGER='less -Ri'
+[ -n "$FZY" ] || FZY='fzf'
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -61,7 +62,7 @@ fi
 
 # Bindings
 
-alias fdcmd='history | grep -oP "[0-9] \K.*" | sk --tac --no-sort'
+alias fdcmd='history | grep -oP "[0-9] \K.*" | ${FZY} --tac --no-sort'
 
 # Allow python to use readline
 export PYTHON_BASIC_REPL=true
@@ -177,6 +178,7 @@ alias re='exec bash'
 
 # Package Managers
 alias sp='sudo pacman'
+alias xr='sudo xbps-remove'
 
 # Programs
 o(){
