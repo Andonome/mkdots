@@ -313,8 +313,6 @@ test -f /usr/share/git/git-prompt.sh && {
     export GIT_PS1_SHOWDIRTYSTATE=1
     GIT_PS1_SHOWCOLORHINTS=1
     GIT_PS1_SHOWUPSTREAM=1
-    #PS1="$PS1"'\[\e[30;47m\]{$?} '
-    #PS1="$PS1"'\[\e[30;47m\] [\A] '
     PS1=''
     PS1="$PS1"'\[\e[35m\]'
     PS1="$PS1"'{$?·\j} '
