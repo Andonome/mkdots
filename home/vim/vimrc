@@ -25,8 +25,8 @@ set number relativenumber showcmd
 set fillchars=eob:\ ,
 
 # remove background colour from colourscheme
-autocmd BufRead,BufNewFile * hi Normal ctermbg=NONE
-autocmd BufRead,BufNewFile * hi EndOfBuffer ctermbg=NONE
+autocmd BufNew,BufEnter,BufRead,BufNewFile * hi Normal ctermbg=NONE
+autocmd BufNew,BufEnter,BufRead,BufNewFile  * hi EndOfBuffer ctermbg=NONE
 
 # change highlights
 
