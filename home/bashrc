@@ -320,6 +320,7 @@ test -f /usr/share/git/git-prompt.sh && {
     PS1="$PS1"'\A'
     PS1="$PS1"'\[\e[35m\]]'
     PS1="$PS1"'\[\e[1;32m\]'
+    [ -z "$SSH_CLIENT" ] || PS1="$PS1"' (\H)'
     PS1="$PS1"' \W'
     PS1="$PS1"'\[\e[0m\]'
     PS1="$PS1"'\[\e[97m\]'
