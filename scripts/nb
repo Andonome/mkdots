@@ -1,0 +1,125 @@
+#!/bin/sh
+
+set -e
+
+trap cleanup EXIT
+
+cleanup(){
+    [ ! -r "$tmp" ] || rm "$tmp"
+}
+
+db=~/rec/nb.rec
+
+id=$(recsel "$db" -t note -CR id | tail -1)
+id="$(( id + 1 ))"
+
+parser="$(command -v html2markdown html2text | head -1)"
+
+format="# {{head}}
+
+({{id}}) {{tag}}
+
+{{body}}
+
+{{url}}
+
+---
+"
+
+while getopts 'rf:pa:g:q:t:u:' OPTION; do
+  case "$OPTION" in
+    p) #^# -p Tag previous note
+      for t in $@; do
+        recset "$db" -t note -n "$id" -f tag -a "$t"
+      done
+      exit 0
+      ;;
+    g) #^# -q Get notes
+      recsel "$db" -t note -q "$OPTARG"
+      exit 0
+      ;;
+    r) #^# -r Random note
+      recsel -t note "$db" -e '#tag = 0'
+      topic="$(recsel -t note "$db" -m 1 -CP tag | head -1)"
+      recsel -t note "$db" -e "tag = '${topic}'" | recfmt "$format" | lowdown -stterm | less -RFi
+      exit 0
+      ;;
+    t) #^# -t "$tag1 $tag2" Long note, no body
+      [ -z "$tags" ] && tags="$OPTARG" || tags="$tags $OPTARG"
+      ;;
+    a) #^# -a Set author
+      author="$OPTARG"
+      ;;
+    q) #^# -q Quote
+      quote="$OPTARG"
+      ;;
+    f) #^# -f Note a relevant file
+      file="$OPTARG"
+      ;;
+    u) #^# -u Set a URL
+      url="$OPTARG"
+      ;;
+    ?)
+      echo "Usage: "
+      echo "$(basename $0) [note]"
+      grep -oP '#\^# \K.*' $0
+      exit 0
+      ;;
+  esac
+done
+shift "$(($OPTIND -1))"
+
+head="$@"
+
+tmp="$(mktemp)"
+
+[ $(( ${#head} * ${#tags} )) -gt 10 ] || {
+    echo "$head" > "$tmp"
+    echo "$tags" >> "$tmp"
+    echo "" >> "$tmp"
+    vim "$tmp" -c 'set filetype=markdown' -c "e!"
+    head="$(sed -n '1p' "$tmp")" && body="$(sed '1,2d' "$tmp")" && tags="$(sed -n '2p' "$tmp")"
+}
+
+
+[ $(( ${#head} + ${#tags} )) -gt 5 ] || exit 1
+
+recins -t note "$db" -f head -v "$head"
+
+[ -z "$body" ] || recset "$db" -t note -n "$id" -f body -a "$body"
+
+for t in $tags; do
+    recset "$db" -t note -n "$id" -f tag -a "$t"
+done
+
+########### Author
+
+[ -z "$author" ] || recset "$db" -t note -n "$id" -f author -a "$author"
+
+########### Quote
+
+[ -z "$quote" ] || recset "$db" -t note -n "$id" -f quote -a "$quote"
+
+########### URL
+
+[ -z "$url" ] || {
+    recset "$db" -t note -n "$id" -f url -a "$url"
+    [ -n "$parser" ] || {
+        echo Install html2markdown or html2text
+        exit 2
+    } \
+    && curl -sL "$url" | $parser > "$tmp" \
+    && [ "$(wc -l < "$tmp")" -gt 2 ] \
+    && $VISUAL "$tmp" \
+    && [ "$(wc -w < "$tmp")" -gt  2 ] \
+    && recins "$db" -t article -f url -v "$url" -f title -v "$(sed -n 's/# //; 1p' "$tmp")" -f body -v "$(sed '1d' "$tmp")" \
+    || echo "No article copied"
+}
+
+########### File
+
+[ -z "$file" ] || {
+    [ -r "$file" ] && recset "$db" -t note -n "$id" -f file -a "$file" || echo "No such file"
+}
+
+recfix "$db"
