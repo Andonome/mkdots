@@ -116,6 +116,7 @@ b(){
 function slow(){
     unset VISUAL
     EDITOR=ed
+    alias ls='dir -F'
     alias task=task rc.verbose:nothing
 	ff=/tmp/bashpipe_$(date +%s)
     ! command -v powerbash > /dev/null || powerbash prompt system
