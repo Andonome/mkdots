@@ -122,6 +122,7 @@ function slow(){
     ! command -v powerbash > /dev/null || powerbash prompt system
 	mkfifo $ff 2>/dev/null
 	( cat $ff | perl -We 'use Time::HiRes;$|++;while(read(STDIN,$c,1)){Time::HiRes::usleep(15000);print $c;}' )& exec &> $ff
+        disown
 }
 
 csv2md(){
