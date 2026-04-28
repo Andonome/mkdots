@@ -34,8 +34,8 @@ while getopts 'rf:pa:g:q:t:u:' OPTION; do
       done
       exit 0
       ;;
-    g) #^# -q Get notes
-      recsel "$db" -t note -q "$OPTARG"
+    g) #^# -g Get notes
+      recsel "$db" -t note -iq "$OPTARG"
       exit 0
       ;;
     r) #^# -r Random note
