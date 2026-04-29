@@ -224,7 +224,7 @@ function tram () {
 	[ -n "$2" ] && \
 		rmDate="$(date -d "$2 days" +%m/%d/%Y)" || \
 		rmDate="$(date -d "1 month" +%m/%d/%Y)" 
-	echo "systemctl start transmission && transmission-remote -t $hash -rad" | sudo at "$rmDate"
+	echo "systemctl start transmission && transmission-remote -t $hash -rad" | at "$rmDate"
 }
 alias scim='sc-im'
 
