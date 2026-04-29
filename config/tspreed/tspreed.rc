@@ -1,9 +1,6 @@
 wpm=450
-keycontrols=true
 separators='\r\f'
-hidecursor=true
 focuspointer=line
 focusbold=true
-focus=true
-proginfo
+focus=false
 focuscolor=1
