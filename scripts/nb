@@ -26,11 +26,12 @@ format="# {{head}}
 ---
 "
 
-while getopts 'rf:pa:g:q:t:u:' OPTION; do
+while getopts 'rf:p:a:g:q:t:u:' OPTION; do
   case "$OPTION" in
     p) #^# -p Tag previous note
-      for t in $@; do
-        recset "$db" -t note -n "$id" -f tag -a "$t"
+      id="$(( id - 1 ))"
+      for t in $OPTARG; do
+        recset --verbose "$db" -t note -n "$id" -f tag -a "$t"
       done
       exit 0
       ;;
