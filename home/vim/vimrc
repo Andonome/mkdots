@@ -77,7 +77,7 @@ set confirm
 set splitbelow splitright
 
 # git
-map ,g :wa<Enter> :!git add % && git commit -S -m""<Left>
+map ,g :wa<Enter> :!git add % && git commit -m""<Left>
 
 filetype on
 filetype plugin on
