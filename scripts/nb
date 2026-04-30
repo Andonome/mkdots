@@ -10,6 +10,31 @@ cleanup(){
 
 db=~/rec/nb.rec
 
+[ -r "$db" ] || {
+    echo need $db
+    mkdir -p "$(dirname "$db")"
+    cat >> "$db" <<EOF
+%rec: note
+%doc: unstructured bits of thought
+%key: id
+%type: id int
+%auto: id
+%type: date date
+%auto: date
+%allowed: date head tag url author body path
+%type: url rec article
+%type: head,path,url line
+%type: tag word
+%typedef: word regexp /^[a-z]+[0-9]*$/
+
+%rec: article
+%doc: Pages from the web and beyond
+%key: url
+%type: url line
+
+EOF
+}
+
 id=$(recsel "$db" -t note -CR id | tail -1)
 id="$(( id + 1 ))"
 
