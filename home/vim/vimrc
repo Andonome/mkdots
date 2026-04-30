@@ -24,7 +24,8 @@ set number relativenumber showcmd
 # remove empty line indicator
 set fillchars=eob:\ ,
 
-# remove background colour from colourscheme
+# Remove background colour from colourscheme.
+# This is repeated at the end.
 autocmd BufNew,BufEnter,BufRead,BufNewFile * hi Normal ctermbg=NONE
 autocmd BufNew,BufEnter,BufRead,BufNewFile  * hi EndOfBuffer ctermbg=NONE
 
@@ -80,3 +81,6 @@ map ,g :wa<Enter> :!git add % && git commit -S -m""<Left>
 
 filetype on
 filetype plugin on
+
+hi Normal ctermbg=NONE
+hi EndOfBuffer ctermbg=NONE
