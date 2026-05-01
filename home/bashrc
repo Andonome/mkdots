@@ -312,6 +312,8 @@ function wotsa(){
 	fi
 }
 
+CDPATH=.:~:~/arc/$(date +%Y/%m/):~/pro/RPG/bind/:~/pro:/mnt/share/:~/kn
+
 test -f /usr/share/git/git-prompt.sh && {
     . /usr/share/git/git-prompt.sh
     export GIT_PS1_SHOWDIRTYSTATE=1
