@@ -117,6 +117,7 @@ function slow(){
     unset VISUAL
     EDITOR=ed
     alias ls='dir -F'
+    export PS1='[$?] \W $ '
     alias task='task rc.verbose:nothing'
 	ff=/tmp/bashpipe_$(date +%s)
     ! command -v powerbash > /dev/null || powerbash prompt system
