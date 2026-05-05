@@ -59,6 +59,7 @@ hi SpellCap cterm=underline
 hi SpellLocal cterm=underline
 hi SpellRare cterm=underline
 
+map gf :e <cfile><Enter>
 map ,v :vsp\|ter<Enter>
 map ,t :vert terminal <Enter>
 map ,T :terminal <Enter>
