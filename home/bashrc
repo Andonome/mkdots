@@ -113,6 +113,13 @@ b(){
 	eval "cd $(for d in $(seq 1 $1); do printf ../; done)"
 }
 
+info () 
+{ 
+    [ -n "$1" ] && file="${1}" || file="$(ls /usr/share/info/ | sed 's/\.info.gz$//' | $FZY )";
+    file="$(ls /usr/share/info/"$file"* | $FZY -1 )"
+    vim "$file"
+}
+
 function slow(){
     unset VISUAL
     EDITOR=ed
