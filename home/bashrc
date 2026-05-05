@@ -331,6 +331,7 @@ test -f /usr/share/git/git-prompt.sh && {
     PS1="$PS1"'\[\e[0m\]'
     PS1="$PS1"'\[\e[97m\]'
     PS1="$PS1"'$(__git_ps1 " (%s)") '
+    PS1="$PS1"'\[\e[0m\]'
     PS1="$PS1"'$ '
 } || {
     [ ! -f ~/.config/powerbash.sh ] || \
