@@ -67,9 +67,8 @@ alias fdcmd='history | grep -oP "[0-9] \K.*" | ${FZY} --tac --no-sort'
 # Allow python to use readline
 export PYTHON_BASIC_REPL=true
 
-command -v systemctl >/dev/null && \
-    alias SS="sudo systemctl" || \
-    alias SS="sudo sv" || \
+sv="$(command -v systemctl sv)"
+alias SS="sudo $sv"
 
 lfcd () {
     if [ -z "$LF_LEVEL" ]; then
@@ -216,13 +215,13 @@ alias tra='transmission-remote -l'
 alias traa='SS start transmission && transmission-remote -a'
 alias tral='transmission-remote -l | grep -v 100'
 function traf (){
-	sudo systemctl start transmission
+	sudo $sv start transmission
 	[ -n "$1" ] && transmission-remote -a "$1"
 	target="$(transmission-remote -l | sed -n 'x;$p' | awk '{print $1}')"
 	transmission-remote -t $target --move /mnt/share/Films/
 }
 function tras (){
-	sudo systemctl start transmission
+	sudo $sv start transmission
 	[ -n "$1" ] && transmission-remote -a "$1"
 	target="$(transmission-remote -l | sed -n 'x;$p' | awk '{print $1}')"
 	transmission-remote -t $target --move /mnt/share/Series/
@@ -232,7 +231,7 @@ function tram () {
 	[ -n "$2" ] && \
 		rmDate="$(date -d "$2 days" +%m/%d/%Y)" || \
 		rmDate="$(date -d "1 month" +%m/%d/%Y)" 
-	echo "systemctl start transmission && transmission-remote -t $hash -rad" | at "$rmDate"
+	echo "sudo $sv start transmission ; transmission-remote -t $hash -rad" | at "$rmDate"
 }
 alias scim='sc-im'
 
