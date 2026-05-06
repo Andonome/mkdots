@@ -21,7 +21,7 @@ process_code(){
 
 while read -r line; do
     if [ "${line:0:3}" = '```' ] && [ ${display} = "false" ]; then
-        type="${line:3:3}"
+        type="${line:3}"
         echo "# $type"
         display=true && continue
     elif [ "${line}" = '```' ]; then
