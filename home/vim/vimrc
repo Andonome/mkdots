@@ -51,7 +51,7 @@ set spelllang=en_gb
 set complete+=kspell
 
 # auto-fix last spelling mistake on Ctrl+l
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+inoremap <C-l> <c-g>u<Esc>[s1z=gi<c-g>u
 
 hi clear SpellBad
 hi SpellBad cterm=underline
