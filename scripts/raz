@@ -2,9 +2,9 @@
 
 set -e
 
-recnik=~/.cache/recnik.rec
+recnik=${XDG_DATA_HOME:-~/rec}/recnik.rec
 
-command -v sk >/dev/null && fuzzy=sk
+fuzzy="$(command -v fzf sk | head -1)"
 
 word="$@"
 
