@@ -2,12 +2,6 @@
 
 set -e
 
-trap cleanup EXIT
-
-cleanup(){
-    [ ! -r "$tmp" ] || rm "$tmp"
-}
-
 db=~/rec/nb.rec
 
 [ -r "$db" ] || {
@@ -51,7 +45,7 @@ format="# {{head}}
 ---
 "
 
-while getopts 'rf:p:a:g:q:t:u:' OPTION; do
+while getopts 'rblf:p:a:g:q:t:u:' OPTION; do
   case "$OPTION" in
     p) #^# -p Tag previous note
       id="$(( id - 1 ))"
@@ -76,6 +70,30 @@ while getopts 'rf:p:a:g:q:t:u:' OPTION; do
     a) #^# -a Set author
       author="$OPTARG"
       ;;
+    l) #^# -l link $id to $id
+      shift "$(($OPTIND -1))"
+      case "$#" in
+        0)
+        printf '# '
+        recsel "$db" -t note -e "link = ''" | recsel -m1 | recfmt "${format}" | lowdown -tterm
+        exit 0
+        ;;
+        1)
+        [ "$1" -gt -1 ] 2>/dev/null || exit "Give me a number"
+        recsel "$db" -t note -e "id = ${1}" | recfmt "${format}" | lowdown -tterm
+        exit 0
+        ;;
+        2)
+        recset "$db" -t note -e "id = ${1}" -f link -a ${2}
+        exit 0
+        ;;
+        *)
+        echo "One link only"
+        exit 4
+        ;;
+      esac
+      exit 0
+      ;;
     q) #^# -q Quote
       quote="$OPTARG"
       ;;
@@ -96,6 +114,12 @@ done
 shift "$(($OPTIND -1))"
 
 head="$@"
+
+trap cleanup EXIT
+
+cleanup(){
+    [ ! -r "$tmp" ] || rm "$tmp"
+}
 
 tmp="$(mktemp)"
 
