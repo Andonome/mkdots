@@ -52,7 +52,7 @@ while getopts 'rblf:p:a:g:k:q:t:u:' OPTION; do
   case "$OPTION" in
     b) #^# -b Make a graph with graph-easy
     for x in $(seq 0 8); do
-        recsel -t note "$db" -j link -G id -e "#link_id_ > $(( x - 1 ))"  | recfmt "$(graph_format $x)"
+        recsel -t note "$db" -j link -e "#link_id_ > $(( x - 1 ))"  | recfmt "$(graph_format $x)"
     done  | graph-easy --boxart
     exit 0
     ;;
