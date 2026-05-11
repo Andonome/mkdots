@@ -150,6 +150,7 @@ tmp="$(mktemp)"
 [ $(( ${#head} + ${#tags} )) -gt 5 ] || exit 1
 
 recins -t note "$db" -f head -v "$head"
+echo "Created entry $id"
 
 [ -z "$body" ] || recset "$db" -t note -n "$id" -f body -a "$body"
 
