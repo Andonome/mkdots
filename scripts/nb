@@ -64,7 +64,7 @@ while getopts 'rblf:p:a:g:k:q:t:u:' OPTION; do
       exit 0
       ;;
     g) #^# -g Get notes
-      recsel "$db" -t note -iq "$OPTARG"
+      recsel "$db" -t note -iq "$OPTARG" -p id,tag,link,head | recsel -m 3 | recfmt "$format" | lowdown -stterm
       exit 0
       ;;
     r) #^# -r Random note
