@@ -11,11 +11,13 @@ db=~/rec/nb.rec
 %rec: note
 %doc: unstructured bits of thought
 %key: id
+%allowed: date head tag url author body quote path link
 %type: id int
 %auto: id
 %type: date date
 %auto: date
-%allowed: date head tag url author body path
+%type: link rec note
+%constraint: id != link
 %type: url rec article
 %type: head,path,url line
 %type: tag word
@@ -24,7 +26,8 @@ db=~/rec/nb.rec
 %rec: article
 %doc: Pages from the web and beyond
 %key: url
-%type: url line
+%type: url,title line
+%allowed: url title author body
 
 EOF
 }
