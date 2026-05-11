@@ -91,7 +91,7 @@ while getopts 'rblf:p:a:g:k:q:t:u:' OPTION; do
         exit 0
         ;;
         1)
-        [ "$1" -gt -1 ] 2>/dev/null || exit "Give me a number"
+        [ "$1" -gt -1 ] 2>/dev/null || exit 1
         recsel "$db" -t note -e "id = ${1}" | recfmt "${format}" | lowdown -tterm
         exit 0
         ;;
@@ -121,14 +121,14 @@ while getopts 'rblf:p:a:g:k:q:t:u:' OPTION; do
     ?)
       echo "Usage: "
       echo "$(basename $0) [note]"
-      grep -oP '#\^# \K.*' $0
+      grep -oP '#\^# \K.*' "$0"
       exit 0
       ;;
   esac
 done
 shift "$(($OPTIND -1))"
 
-head="$@"
+head="$*"
 
 trap cleanup EXIT
 
