@@ -4,6 +4,16 @@ set -e
 
 db=~/rec/nb.rec
 
+trap commit EXIT
+
+commit(){
+    cd "$(dirname "$db")"
+    [ ! -r .git ] || { 
+        git add "$db"
+        git commit -m "NB: $message"
+    }
+}
+
 [ -r "$db" ] || {
     echo need $db
     mkdir -p "$(dirname "$db")"
@@ -51,7 +61,7 @@ format="# {{head}}
 ---
 "
 
-while getopts 'rblf:p:a:g:k:q:t:u:' OPTION; do
+while getopts 'reblf:p:a:g:k:q:t:u:' OPTION; do
   case "$OPTION" in
     b) #^# -b Make a graph with graph-easy
     for x in $(seq 0 8); do
@@ -59,11 +69,18 @@ while getopts 'rblf:p:a:g:k:q:t:u:' OPTION; do
     done  | graph-easy --boxart
     exit 0
     ;;
+    e) #^# -e Edit database
+      $EDITOR "$db"
+      shift "$(($OPTIND -1))"
+      [ -z "$1" ] && message="edits" || message="$*"
+      exit 0
+    ;;
     p) #^# -p Tag previous note
       id="$(( id - 1 ))"
       for t in $OPTARG; do
         recset --verbose "$db" -t note -n "$id" -f tag -a "$t"
       done
+      message="add $OPTARG to $id"
       exit 0
       ;;
     g) #^# -g Get notes
@@ -97,6 +114,7 @@ while getopts 'rblf:p:a:g:k:q:t:u:' OPTION; do
         ;;
         2)
         recset "$db" -t note -e "id = ${1}" -f link -a ${2}
+        message="link $1 to $2"
         exit 0
         ;;
         *)
@@ -134,6 +152,7 @@ trap cleanup EXIT
 
 cleanup(){
     [ ! -r "$tmp" ] || rm "$tmp"
+    commit
 }
 
 tmp="$(mktemp)"
@@ -151,6 +170,7 @@ tmp="$(mktemp)"
 
 recins -t note "$db" -f head -v "$head"
 echo "Created entry $id"
+message="$head"
 
 [ -z "$body" ] || recset "$db" -t note -n "$id" -f body -a "$body"
 
@@ -191,3 +211,4 @@ done
 }
 
 recfix "$db"
+
