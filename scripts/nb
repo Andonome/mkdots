@@ -10,7 +10,7 @@ commit(){
     cd "$(dirname "$db")"
     [ ! -r .git ] || { 
         git add "$db"
-        git commit -m "NB: $message"
+        [ -z "$message" ] || git commit -m "NB: $message"
     }
 }
 
