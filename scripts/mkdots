@@ -1,5 +1,5 @@
 #!/bin/sh
 cd $HOME/.dots || exit 1
 git diff --quiet || test -z "$PS1" || { git add -p && git commit && git push ;}
-git fetch && git diff --quiet || git merge origin/all -mautomatic\ update
+git fetch && git diff --quiet origin/all || git merge origin/all -mautomatic\ update
 make -s
