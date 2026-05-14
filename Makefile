@@ -35,8 +35,21 @@ $(gitignore): $(ignored)
 
 default += $(gitignore)
 
-.PHONY: secrets
-secrets: $(secrets)
+default += $(secrets)
+
+$(secrets): $(HOME)/.%: $(HOME)/.password-store/%.gpg
+	@mkdir -p $(@D)
+	@chmod 700 $(@D)
+	gpg --quiet --decrypt $< > $@ 
+	chmod 600 $@
+
+creds += $(secrets)
+
+.PHONY: safe
+safe:
+	shred -f $(creds)
+	$(RM) $(creds)
+
 
 .PHONY: .default
 .default: $(default)
