@@ -51,7 +51,7 @@ y|summr(y)'
 		timew sum :month :ids
 		;;
 		M)
-		timew move @$2 $3
+		timew move @$2 $3 :adjust
 		;;
 		n)
 		[ -z "$2" ] && timew continue || \
