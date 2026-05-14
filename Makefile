@@ -2,7 +2,13 @@ CP = ln -f
 .PHONY: output
 output: .default
 
-include $(wildcard extra/*.mk)
+include extra/secrets.mk
+include extra/cron.mk
+include extra/glab.mk
+include extra/mime.mk
+include extra/ssh.mk
+include extra/tut.mk
+include extra/vim.mk
 
 default += $(live_home) $(live_configs) $(live_scripts)
 
