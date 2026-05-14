@@ -24,7 +24,6 @@ path=.local/share/newsraft
 path=.local/share/contacts
 path=.local/state/task
 path=.config/lf
-path=.config/zathura
 path=.config/.bombadillo.ini
 path=.config/lagrange
 path=.config/himalaya
