@@ -174,7 +174,9 @@ message="$head"
 
 [ -z "$body" ] || recset "$db" -t note -n "$id" -f body -a "$body"
 
-[ -z "$link" ] || recset "$db" -t note -n "$id" -f link -a "$link"
+for l in $links; do
+    recset "$db" -t note -n "$id" -f link -a "$l"
+done
 
 for t in $tags; do
     recset "$db" -t note -n "$id" -f tag -a "$t"
