@@ -15,3 +15,5 @@ Date: $(date --rfc-email)
 
 "$message"
 EOF
+
+mbsync -a
