@@ -29,7 +29,7 @@ commit(){
 %type: link rec note
 %constraint: id != link
 %type: url rec article
-%type: head,path,url line
+%type: head,path line
 %type: tag word
 %typedef: word regexp /^[a-z]+[0-9]*$/
 
