@@ -47,8 +47,10 @@ id="$(( id + 1 ))"
 
 parser="$(command -v html2markdown html2text | head -1)"
 graph_format(){
-    printf '%s\n' "[ {{id}} {{tag}} ] --> [ {{link_id[$1]}} {{link_tag}} ]"
+    printf '%s\n' "[ {{id}} ] --> [ {{link_id[$1]}} ]"
 }
+
+graph_box="$(printf '%s\n' '[ {{id}} ]{label: {{id}} {{tag}} ;}')"
 
 format="# {{head}}
 
@@ -66,9 +68,12 @@ format="# {{head}}
 while getopts 'reblf:p:a:g:k:q:t:u:' OPTION; do
   case "$OPTION" in
     b) #^# -b Make a graph with graph-easy
+    {
+    recsel -t note "$db"  | recfmt "$graph_box"
     for x in $(seq 0 8); do
         recsel -t note "$db" -j link -e "#link_id_ > $(( x - 1 ))"  | recfmt "$(graph_format $x)"
-    done  | graph-easy --boxart
+    done 
+    } | graph-easy --boxart
     exit 0
     ;;
     e) #^# -e Edit database
