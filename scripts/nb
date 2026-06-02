@@ -65,7 +65,23 @@ format="# {{head}}
 ---
 "
 
-while getopts 'reblf:p:a:g:k:q:t:u:' OPTION; do
+longFormat="# {{head}}
+
+({{id}}) < {{tag[0]}} {{tag[1]}} {{tag[2]}} {{tag[3]}}  > {{link[0]}} {{link[1]}} {{link[2]}} {{link[3]}}
+
+> {{quote}}
+
+{{body}}
+
+---
+
+# {{url_title}}
+
+{{url_body}}
+
+"
+
+while getopts 'reblf:p:a:g:k:q:t:u:v:' OPTION; do
   case "$OPTION" in
     b) #^# -b Make a graph with graph-easy
     {
@@ -142,6 +158,17 @@ while getopts 'reblf:p:a:g:k:q:t:u:' OPTION; do
       ;;
     u) #^# -u Set a URL
       url="$OPTARG"
+      ;;
+    v) #^# -v View note with everything attached.
+      [ "$OPTARG" -ge 0 ] || {
+        echo "Give an ID number"
+        exit 1
+      }
+      result="$(recsel "$db" -t note -e "id = ${OPTARG}" -j url)"
+      [ -z "$result" ] \
+      && recsel "$db" -t note -e "id = ${OPTARG}" | recfmt "${format}" | lowdown -tterm \
+      || recsel "$db" -t note -e "id = ${OPTARG}" -j url | recfmt "$longFormat" | lowdown -stterm | less -RFi
+      exit 0
       ;;
     ?)
       echo "Usage: "
