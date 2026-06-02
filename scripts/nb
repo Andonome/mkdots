@@ -75,6 +75,12 @@ longFormat="# {{head}}
 
 ---
 
+    {{author}} {{url_author}}
+
+    {{path}}
+
+---
+
 # {{url_title}}
 
 {{url_body}}
