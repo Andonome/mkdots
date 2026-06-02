@@ -52,9 +52,9 @@ graph_format(){
 
 graph_box="$(printf '%s\n' '[ {{id}} ]{label: {{id}} {{tag}} ;}')"
 
-format="# {{head}}
+format='# {{head}}
 
-({{id}}) < {{tag[0]}} {{tag[1]}} {{tag[2]}} {{tag[3]}}  > {{link[0]}} {{link[1]}} {{link[2]}} {{link[3]}}
+**({{id}})** < {{tag[0]}} {{tag[1]}} {{tag[2]}} {{tag[3]}} > {{link[0]}} {{link[1]}} {{link[2]}} {{link[3]}}
 
 > {{quote}}
 
@@ -63,7 +63,7 @@ format="# {{head}}
 {{url}}
 
 ---
-"
+'
 
 longFormat="# {{head}}
 
