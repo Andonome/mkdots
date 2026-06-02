@@ -148,7 +148,7 @@ while getopts 'reblf:p:a:g:k:q:t:u:v:' OPTION; do
       exit 0
       ;;
     k) #^# -k Set link
-      link="$OPTARG"
+      links="$OPTARG"
       ;;
     q) #^# -q Quote
       quote="$OPTARG"
