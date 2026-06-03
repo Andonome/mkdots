@@ -37,7 +37,7 @@ commit(){
 %doc: Pages from the web and beyond
 %key: url
 %type: url,title line
-%allowed: url title author body
+%allowed: url title author body date
 
 EOF
 }
