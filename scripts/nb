@@ -95,7 +95,7 @@ while getopts 'dreblf:p:a:g:k:q:t:u:v:' OPTION; do
     for x in $(seq 0 8); do
         recsel -t note "$db" -j link -e "#link_id_ > $(( x - 1 ))"  | recfmt "$(graph_format $x)"
     done 
-    } | graph-easy --boxart
+    } | graph-easy --boxart | less -RSi
     exit 0
     ;;
     d) #^# -d Show a dangling note
