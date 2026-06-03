@@ -46,9 +46,7 @@ id=$(recsel "$db" -t note -CR id | tail -1)
 id="$(( id + 1 ))"
 
 parser="$(command -v html2markdown html2text | head -1)"
-graph_format(){
-    printf '%s\n' "[ {{id}} ] --> [ {{link_id[$1]}} ]"
-}
+graph_format="$(printf '%s\n' "[ {{id}} ] --> [ {{link}} ]")"
 
 graph_box="$(printf '%s\n' '[ {{id}} ]{label: {{id}} {{tag}} ;}')"
 
@@ -93,7 +91,7 @@ while getopts 'dreblf:p:a:g:k:q:t:u:v:' OPTION; do
     {
     recsel -t note "$db"  | recfmt "$graph_box"
     for x in $(seq 0 8); do
-        recsel -t note "$db" -j link -e "#link_id_ > $(( x - 1 ))"  | recfmt "$(graph_format $x)"
+        recsel -t note "$db" -e "link[$x] != ''" -p "id,link[$x]" | recfmt "$graph_format"
     done 
     } | graph-easy --boxart | less -RSi
     exit 0
