@@ -7,6 +7,10 @@ ab pc player character
 ab pcs player characters
 ab dm Dungeon Master
 ab pkm personal knowledge management
+ab pr pull request
+ab prs pull requests
+ab mr merge request
+ab mrs merge requests
 ab sp small potatoes
 ab ng night guard
 ab ngs night guards
