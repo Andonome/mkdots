@@ -4,6 +4,7 @@
 
 set mouse=true
 set mpris=false
+set ignore_duplicates=true
 
 bind -f common q quit
 
