@@ -28,6 +28,7 @@ commit(){
 %auto: date
 %type: link rec note
 %constraint: id != link
+%constraint: #head = 0 => #quote
 %type: url rec article
 %type: head,path line
 %type: tag word
