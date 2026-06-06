@@ -7,8 +7,6 @@
 	signingKey = 024C6B1C84449BD1CB4DF7A152295D2377F4D70F
 [pull]
 	rebase = false
-[init]
-	defaultBranch = master
 [advice]
 	addIgnoredFile = false
 [protocol "file"]
