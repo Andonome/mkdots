@@ -61,7 +61,7 @@ hi SpellCap cterm=underline
 hi SpellLocal cterm=underline
 hi SpellRare cterm=underline
 
-map gf :e <cfile><Enter>
+map mf :e <cfile><Enter>
 map gs :split <cfile><Enter>
 map gv :vsplit <cfile><Enter>
 map ,v :vsp\|ter<Enter>
