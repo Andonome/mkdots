@@ -15,5 +15,18 @@ fi
 
 make
 
+app_list='signal-desktop autotiling'
+for app in $app_list ; do
+    (
+        pgrep $app && \
+        pkill $app && \
+        $app 2>&1 >/dev/null & disown
+    )
+done
+
+! pgrep qutebrowser || qutebrowser :config-source
+! pgrep aerc || aerc :reload -C
+! pgrep cmus || cmus-remote --server /tmp/cmus -C 'source ~/.config/cmus/rc'
+
 swaymsg reload
 
