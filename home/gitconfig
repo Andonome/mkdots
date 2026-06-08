@@ -11,6 +11,8 @@
 	addIgnoredFile = false
 [protocol "file"]
 	allow = always
+[init]
+	defaultBranch = master
 [branch]
   sort = -committerdate
 [commit]
