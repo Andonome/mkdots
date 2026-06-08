@@ -1,14 +1,19 @@
 #!/bin/bash
 
+set -e
+set -u
+
+magick /usr/share/backgrounds/$1/"$(ls /usr/share/backgrounds/$1 | sort -R | tail -n 1)" -crop 100%x50% /usr/share/backgrounds/out.jpg
+
+cd ~/.dots
+
 if [[ $1 == dark ]]; then
-	cd ~/.dots && git checkout $HOSTNAME
-	ln -sf ~/.dots/config/gtk-3.0/dark.ini ~/.config/gtk-3.0/settings.ini
-
+	git checkout $HOSTNAME
 else
-	cd ~/.dots && git checkout $HOSTNAME-light
-	ln -sf ~/.dots/config/gtk-3.0/light.ini ~/.config/gtk-3.0/settings.ini
-
+	git checkout $HOSTNAME-light
 fi
 
-xrdb ~/.Xresources
-i3-msg restart
+make
+
+swaymsg reload
+
