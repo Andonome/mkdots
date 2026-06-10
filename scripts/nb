@@ -143,7 +143,6 @@ while getopts 'dreblf:p:a:g:k:q:t:u:v:' OPTION; do
       shift "$(($OPTIND -1))"
       case "$#" in
         0)
-        printf '# '
         recsel "$db" -t note -e "link = ''" | recsel -m1 | recfmt "${format}" | lowdown -tterm
         exit 0
         ;;
