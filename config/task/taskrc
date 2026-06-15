@@ -9,6 +9,8 @@ urgency.blocked.coefficient=0
 
 search.case.sensitive=0
 
+rc.gc=off
+
 recurrence=off
 # No. tasks before nag
 bulk=5
@@ -43,7 +45,7 @@ report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +P
 
 weekstart=Monday
 
-news.version=3.3.1
+news.version=3.4.2
 # Bugwarrior UDAs
 uda.gitlabtitle.type=string
 uda.gitlabtitle.label=Gitlab Title
