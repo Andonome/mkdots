@@ -3,6 +3,7 @@ CP = ln -f
 output: .default
 
 include extra/cron.mk
+include extra/git.mk
 include extra/glab.mk
 include extra/mime.mk
 include extra/ssh.mk
