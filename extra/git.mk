@@ -10,7 +10,7 @@ ${HOME}/.gitconfig: $(MAKEFILE_LIST)
 	git config --global advice.addignoredfile false
 	git config --global protocol.file.allow always
 	git config --global init.defaultbranch master
-	git config --global branch.sort "-comitterdate"
+	git config --global branch.sort "-committerdate"
 	git config --global merge.conflictstyle diff3
 	git config --global credential.helper cache
 	git config --global credential.https://repo.studiobedem.rs.helper "!tea login helper"
