@@ -86,7 +86,7 @@ longFormat="# {{head}}
 
 "
 
-while getopts 'dreblf:p:a:g:k:q:t:u:v:' OPTION; do
+while getopts 'mreblf:p:a:g:k:q:t:u:v:' OPTION; do
   case "$OPTION" in
     b) #^# -b Make a graph with graph-easy
     {
@@ -97,7 +97,7 @@ while getopts 'dreblf:p:a:g:k:q:t:u:v:' OPTION; do
     } | graph-easy --boxart | less -RSi
     exit 0
     ;;
-    d) #^# -d Show a dangling note
+    m) #^# -m Show a dangling note
     linkless="$(recsel "$db" -t note -e "link = ''" -CP id | sort -R )"
     for id in $linkless ; do
         [ "$(recsel "$db" -t note -e "link = '${id}'" -c )" -gt 0 ] \
