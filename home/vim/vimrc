@@ -69,6 +69,7 @@ map ,t :vert terminal <Enter>
 map ,T :terminal <Enter>
 map ,m :w<Enter> :make <Enter>
 map ,M :terminal ++close make <Enter>
+map ,p :%s/[^[:print:]]//g<Enter>
 
 # ask about saving instead of just failing
 set confirm
