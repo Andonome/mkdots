@@ -85,7 +85,7 @@ update_as_sudo xbps-install "-Syu"
 
 update_as_so yay "-Syu --noconfirm"
 
-update_as_so flatpak update
+update_as_sudo flatpak update
 
 update_as_so bugwarrior pull
 
