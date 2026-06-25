@@ -149,7 +149,7 @@ function lookit(){
 }
 
 function sendfile(){
-	curl --upload-file "$1" https://free.keep.sh
+	curl -F "file=@$1" https://4d2.sh
 }
 
 function sendtext(){
