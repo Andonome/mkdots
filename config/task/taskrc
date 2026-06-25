@@ -9,7 +9,7 @@ urgency.blocked.coefficient=0
 
 search.case.sensitive=0
 
-rc.gc=off
+gc=off
 
 recurrence=off
 # No. tasks before nag
