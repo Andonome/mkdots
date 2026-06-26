@@ -17,7 +17,8 @@ bulk=5
 
 default.command=next
 
-include colours.theme
+include /usr/share/doc/task/rc/solarized-dark-256.theme
+
 color=on
 color.project.wedding=yellow
 color.project.irish=green
