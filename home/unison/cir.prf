@@ -1,8 +1,6 @@
 root=/home/ghost
 root=ssh://ghost@splint.rs:2360//home/ghost/
 times=true
-copyonconflict=true
-prefer=newer
 
 log = false
 ignore=Name temp.*
@@ -12,29 +10,23 @@ ignore=Name node_modules
 ignore=Name rubbish
 ignore=Name svg-inkscape
 ignore=Name public
+ignore=Name Library
 
 path=rec
-path=.timewarrior
 path=pro
+path=kn
+
+path=.timewarrior
 path=.w3m/bookmark.html
 
 path=.local/share/calcurse
 path=.local/share/newsraft
 
 path=.local/share/contacts
-path=.local/state/task
 path=.config/.bombadillo.ini
 path=.config/lagrange
-path=.config/himalaya
-path=.config/weechat
-path=.tmux.conf
 
 path=.config/qutebrowser/bookmarks
 path=.config/qutebrowser/quickmarks
 
-path=kn
-
-path=.config/aerc
-path=.config/profanity/profrc
-path=.config/profanity/accounts
 path=.vim/spell/en.utf-8.add
