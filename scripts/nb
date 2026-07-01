@@ -3,6 +3,7 @@
 set -e
 
 db=~/rec/nb.rec
+FZF="$(command -v fzf sk | head -1)"
 
 trap commit EXIT
 
@@ -227,6 +228,8 @@ message="$head"
 for l in $links; do
     recset "$db" -t note -n "$id" -f link -a "$l"
 done
+
+[ ! -z "$tags" ] || [ ! -t 0 ] || tags="$(recsel "$db" -t note -CP tag | sort -u | $FZF --multi --bind 'enter:accept-or-print-query' )"
 
 for t in $tags; do
     recset "$db" -t note -n "$id" -f tag -a "$t"
