@@ -1,6 +1,6 @@
 #!/bin/bash
 
-family="$(grep '^192' /etc/hosts | awk '{print $2}')"
+family="$(grep -oP '\d\d\.\d\d[^\s]+' /etc/hosts)"
 
 timeout 2 curl -s wttr.in/Moon
 
