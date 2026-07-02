@@ -47,7 +47,7 @@ fi
 magnet="$(echo $magnet | cut -d'&' -f1)"
 
 if [ "$printout" ]; then
-	printf "$magnet" | xclip -selection clipboard
+	printf "$magnet" | wl-copy
 else
 	sudo systemctl start transmission
 	transmission-remote -a "$magnet"  -w $dl_dir
