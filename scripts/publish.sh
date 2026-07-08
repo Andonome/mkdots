@@ -1,13 +1,13 @@
 #!/bin/sh
 
 cd ~/gemini/splint.rs
-git pull origin splint
+git pull --recurse-submodules origin splint
 make
 
 rsync -autU --delete public/ /srv/gemini/splint.rs/
 
 cd ~/gemini/ttrpgs.com
-git pull origin ttrpgs
+git pull --recurse-submodules origin ttrpgs
 make
 
 rsync -autU --delete public/ /srv/gemini/ttrpgs.com/
