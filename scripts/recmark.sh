@@ -28,11 +28,7 @@ pick_article(){
 
 ###############
 
-for fuzzy in sk fzf fzy; do
-    command -v $fuzzy >/dev/null && \
-        FZY=$fuzzy && \
-        break
-done
+FZY="$(command -v fzf sk fzy | head -1)"
 
 [ -f articles.rec ] || (
     touch articles.rec
