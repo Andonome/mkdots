@@ -47,5 +47,5 @@ $(plugin_path) &: | extra/vim/
 
 $(auto_copies) $(doc_copies) $(script_copies): | $(plugin_path)
 
-default += $(auto_copies) $(doc_copies) $(script_copies)
+default += $(auto_copies) $(doc_copies) $(script_copies) $(plugin_path)
 
