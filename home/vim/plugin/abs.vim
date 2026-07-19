@@ -2,17 +2,17 @@ ab coordinated coördinated
 ab coordinate coördinate
 ab cooperate coöperate
 ab cooperated coöperated
-ab gm Game Master
-ab pc player character
-ab pcs player characters
-ab dm Dungeon Master
-ab pkm personal knowledge management
-ab pr pull request
-ab prs pull requests
-ab mr merge request
-ab mrs merge requests
-ab sp small potatoes
-ab ng night guard
-ab ngs night guards
-ab xp experience point
-ab xps experience points
+ab PR pull request
+ab PRs pull requests
+ab MR merge request
+ab MRs merge requests
+ab SP small potatoes
+ab PKM personal knowledge management
+ab GM Game Master
+ab PC player character
+ab PCs player characters
+ab DM Dungeon Master
+ab NG night guard
+ab NGs night guards
+ab XP experience point
+ab XPs experience points
