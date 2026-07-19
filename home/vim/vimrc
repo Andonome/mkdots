@@ -1,5 +1,8 @@
 vim9script
 
+# load other files into buffer without having to save
+set hidden
+
 # better command-line completion
 set wildoptions+=fuzzy
 set wildmenu
