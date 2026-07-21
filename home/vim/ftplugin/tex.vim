@@ -1,3 +1,6 @@
+set suffixesadd=.tex
+set suffixesadd=.sty
+
 " Include files in buffer for autocomplete...
 autocmd BufRead argadd *.tex
 " ...then remove them.
