@@ -32,7 +32,6 @@ FZY="$(command -v fzf sk fzy | head -1)"
 
 [ -f articles.rec ] || (
     touch articles.rec
-    echo articles.rec >> .git/info/exclude
 )
 
 [ ! -f .git/info/exclude ] || \
