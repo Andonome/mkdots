@@ -9,7 +9,7 @@ showme(){
 alias task="task rc.verbose:nothing rc.confirmation:no rc.hooks:off rc.gc=0"
 
 random_visual(){
-    r=$(ranno 8)
+    r=$(ranno 9)
     case "$r" in
     1)
     showme journalctl --user -eo cat -n 42
@@ -50,6 +50,9 @@ random_visual(){
     t=$(ranno)
     x=$(( t + 4 ))
     sleep $x
+    ;;
+    9)
+    timeout --foreground $(ranno)m weathr
     ;;
     esac
 }
