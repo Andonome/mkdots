@@ -1,5 +1,6 @@
 #plugins += https://github.com/alx741/vinfo.git
 #plugins += https://github.com/jamessan/vim-gnupg.git
+plugins += https://github.com/zaid/vim-rec.git
 
 ################
 
