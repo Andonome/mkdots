@@ -89,4 +89,6 @@ update_as_sudo flatpak update
 
 update_as_so bugwarrior pull
 
+update_as_so xlocate "-S"
+
 update_as_so dysk ""
