@@ -1,0 +1,5 @@
+
+@daily mbsync -a
+
+0 */3 * * * msmtpq --q-mgmt -r
+

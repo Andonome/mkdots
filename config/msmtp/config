@@ -3,12 +3,14 @@ tls on
 tls_starttls on
 auth on
 logfile ~/.cache/msmtp.log
+set_from_header auto
+set_to_header on
 
 account home
 host {{smtp}}
 port 587
 user {{email}}
-from "{{name}}" <{{email}}>
+from {{email}}
 passwordeval pass email
 tls on
 tls_starttls on
