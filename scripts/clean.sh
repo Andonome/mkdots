@@ -71,6 +71,7 @@ sunday_big_clean(){
 	update_as_sudo xbps-remove "-oOy"
 	update_as_so vkpurge list
 	update_as_sudo pkgfile "-u"
+	update_as_sudo /opt/texlive/"$(date +%Y)"/bin/x86_64-linux/tlmgr "update --self"
 	update_as_sudo /opt/texlive/"$(date +%Y)"/bin/x86_64-linux/tlmgr "update --all"
 }
 
