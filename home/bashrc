@@ -120,7 +120,7 @@ info ()
 function slow(){
     unset VISUAL
     EDITOR=ed
-    alias ls='dir -F'
+    alias ls='dir -FX'
     export PS1='[$?] \W $ '
     alias task='task rc.verbose:nothing'
 	ff=/tmp/bashpipe_$(date +%s)
