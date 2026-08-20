@@ -8,6 +8,8 @@ case $- in
       *) return;;
 esac
 
+[[ "$PATH" == *"home"* ]] || PATH="$HOME/.local/bin/:$PATH"
+
 [ -n "$PAGER" ] || PAGER='less -Ri'
 [ -n "$FZY" ] || FZY='fzf'
 
