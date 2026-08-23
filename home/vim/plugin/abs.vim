@@ -7,14 +7,14 @@ ab PRs pull requests
 ab MR merge request
 ab MRs merge requests
 ab SP small potatoes
-ab PKM personal knowledge management
-ab GM Game Master
-ab PC player character
-ab PCs player characters
-ab NPC non-player character
-ab NPCs non-player characters
-ab DM Dungeon Master
-ab NG night guard
-ab NGs night guards
-ab XP experience point
-ab XPs experience points
+ab pkm personal knowledge management
+ab gm Game Master
+ab dm Dungeon Master
+ab ng night guard
+ab ngs night guards
+ab pc player character
+ab pcs player characters
+ab npc non-player character
+ab npcs non-player characters
+ab xp experience point
+ab xps experience points
