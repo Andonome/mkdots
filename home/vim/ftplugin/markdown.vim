@@ -6,6 +6,9 @@ map ,` o```<Enter>```<Esc>kA
 setlocal tabstop=4 expandtab shiftwidth=4
 set suffixesadd=.md
 
+autocmd BufWinEnter,BufNewFile * setlocal formatoptions=watcqlnro
+
+
 setlocal spell
 
 vmap <C-t> :!tr -s ' -' \|column -ts '\|' -o '\|'<Enter>j:s/ /-/g<Enter>k
