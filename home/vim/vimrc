@@ -69,10 +69,10 @@ map mf :e <cfile><Enter>
 map gs :split <cfile><Enter>
 map gv :vsplit <cfile><Enter>
 map ,v :vsp\|ter<Enter>
-map ,t :vert terminal <Enter>
-map ,T :terminal <Enter>
+map ,t :vert terminal ++close <Enter>
+map ,T :terminal ++close <Enter>
 map ,m :w<Enter> :make <Enter>
-map ,M :terminal ++close make <Enter>
+map ,M :terminal ++hidden ++open make <Enter>
 map ,p :%s/[^[:print:]]//g<Enter>
 
 # ask about saving instead of just failing
