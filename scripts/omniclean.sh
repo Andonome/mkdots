@@ -1,6 +1,6 @@
 #!/bin/bash
 
-family="$(grep -oP '\d\d+\.\d\d[^\s]+' /etc/hosts)"
+family="$(grep -Po '[\d.-]{10,}' /etc/hosts)"
 
 timeout 2 curl -s wttr.in/Moon
 
