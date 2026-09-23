@@ -1,0 +1,4 @@
+# Extended mode
+-e
+--disable-delete
+--color dark
