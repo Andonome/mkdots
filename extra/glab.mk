@@ -11,7 +11,7 @@ $(HOME)/.config/glab-cli/config.yml: $(HOME)/.password-store/$(token_name).gpg $
 	glab config --global set browser qutebrowser
 	glab config --global set display_hyperlinks false
 
-$(HOME)/.config/glab-cli/aliases.yml: $(HOME)/.config/glab-cli/config.yml
+$(HOME)/.config/glab-cli/aliases.yml: | $(HOME)/.config/glab-cli/config.yml
 	glab alias set c 'issue list'
 	glab alias set s 'issue view $1 --comments'
 	glab alias set r 'issue note $1 --message'
