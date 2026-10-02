@@ -206,13 +206,13 @@ cleanup(){
     commit
 }
 
-tmp="$(mktemp)"
+tmp="$( mktemp --suffix .md )"
 
 [ $(( ${#head} * ${#tags} )) -gt 10 ] || {
     echo "$head" > "$tmp"
     echo "$tags" >> "$tmp"
     echo "" >> "$tmp"
-    vim "$tmp" -c 'set filetype=markdown' -c "e!"
+    $EDITOR "$tmp"
     head="$(sed -n '1p' "$tmp")" && body="$(sed '1,2d' "$tmp")" && tags="$(sed -n '2p' "$tmp")"
 }
 
