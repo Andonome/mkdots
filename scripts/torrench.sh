@@ -44,7 +44,7 @@ magnet="$(grep -F -A5 "$pick" "$tmp" | awk '/hMagnet/ {print $3}')"
 
 if [ "$printout" = "true" ]; then
     echo "$magnet"
-    echo "$magnet" | wl-copy
+    [ -z "$WAYLAND_DISPLAY" ] || echo "$magnet" | wl-copy
     exit 0
 fi
 
@@ -56,4 +56,3 @@ sudo $sv start transmission
 
 transmission-remote -a "$magnet" -w /mnt/share/"$category"
 
-echo "$magnet"
