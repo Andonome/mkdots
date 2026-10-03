@@ -1,21 +1,18 @@
-#!/bin/bash
-# search for torrents, e.g.
-# ./torrench.sh nina paley
-#
-# If you haven't set up transmission before, install it (it's usually called 'transmission-cli'.
-# The default download directory can be changed below, or edit '/var/lib/transmission/.config/transmission-daemon/settings.json' and change 'download-dir' line, and remove the last line in this script.)
+#!/bin/sh
 
-urldecode() { echo -e "${@//%/\\x}"; }
+sv="$(command -v sv systemctl)"
 
-source=leet
+source='gopher://bay.parazy.de:666/1/q.dcgi?'
 
-while getopts 'kp' OPTION; do
+category=Series
+
+while getopts 'tp' OPTION; do
   case "$OPTION" in
     p)
       printout=true
       ;;
-    k)
-      source=kikass
+    t)
+      unset category
       ;;
     ?)
       echo "flag not recognized" >&2
@@ -25,30 +22,38 @@ while getopts 'kp' OPTION; do
 done
 shift "$(($OPTIND -1))"
 
+query="$@"
+
+[ -z "$query" ] && read -p "Query? " query
+
 dl_dir=/mnt/share/Series
 
-# Replace spaces with '+' sign
-query=$(printf '%s' "$*" | tr ' ' '+' )
+tmp=$( mktemp --suffix=.rec )
 
-if [ "$source" = "leet" ]; then
-    movie="$(curl -s https://www.1337xx.to/search/"$query"/1/ | grep --max-count=8 -Eo "torrent/[0-9]{7}/[a-zA-Z0-9?%-]*/"| fzy)"
+request="$( echo $query | sed 's/ /%09/g' )"
 
-    # get a magnet link from 1337.wtf
-    magnet="$(curl -s https://www.1337xx.to/"$movie" | grep --max-count=1 -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*")"
-else
-    full_page="$(curl -sA "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0" "https://kickassz.com/usearch/$query")"
-    selection="$(echo "$full_page" | grep cellMainLink | cut -d'>' -f2 | cut -d'<' -f1 | sk)"
-    basic_magnet="$(echo "$full_page" | grep -FA30 -m1 "$selection" | grep -oP '=\Kmagnet.*' | cut -d'"' -f1)"
-    magnet="$(urldecode "$basic_magnet")"
+curl -s "${source}${request}" > "$tmp"
+
+get_names(){
+    sed -r -n 's/iName:(.*)\tErr.*/\1/p' "$tmp" | fzf
+}
+
+pick="$(get_names)"
+
+magnet="$(grep -F -A5 "$pick" "$tmp" | awk '/hMagnet/ {print $3}')"
+
+if [ "$printout" = "true" ]; then
+    echo "$magnet"
+    echo "$magnet" | wl-copy
+    exit 0
 fi
 
-[ -z "$magnet" ] && exit 0
-
-magnet="$(echo $magnet | cut -d'&' -f1)"
-
-if [ "$printout" ]; then
-	printf "$magnet" | wl-copy
-else
-	sudo systemctl start transmission
-	transmission-remote -a "$magnet"  -w $dl_dir
+if [ -z "$category" ] ; then 
+    category="$( basename -s /mnt/share/* | fzf )"
 fi
+
+sudo $sv start transmission
+
+transmission-remote -a "$magnet" -w /mnt/share/"$category"
+
+echo "$magnet"
