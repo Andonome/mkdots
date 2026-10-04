@@ -1,5 +1,7 @@
 colorscheme slate
 
+set nowrap
+
 setlocal laststatus=2
 
 map ,` o```<Enter>```<Esc>kA
