@@ -1,3 +1,5 @@
+set numeric_decimal=0
+set numeric_zero=0
 set autowrap
 nmap "<C-p>" ":prevsheet<cr>"
 nmap "<C-n>" ":nextsheet<cr>"
