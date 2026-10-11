@@ -146,6 +146,7 @@ fi
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/msmtpq/config ]; then
   source "${XDG_CONFIG_HOME:-$HOME/.config}"/msmtpq/config
+  LOG="${XDG_CACHE_HOME}/msmtpq"
 elif [ -f "${MSMTPQ_RC:-"$HOME"/.msmtpqrc}" ]; then
   source "${MSMTPQ_RC:-"$HOME"/.msmtpqrc}"
 fi
