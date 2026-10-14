@@ -30,3 +30,4 @@ done
 
 swaymsg reload
 
+killall $(basename $0)
