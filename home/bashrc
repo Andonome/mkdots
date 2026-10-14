@@ -212,7 +212,7 @@ alias prof='profanity;e'
 alias mpv='mpv --geometry=1400'
 alias myip='dig +short myip.opendns.com @resolver$((RANDOM % 4 + 1)).opendns.com'
 alias tra='transmission-remote -l'
-alias traa='SS start transmission && transmission-remote -a'
+alias traa='SS start transmission-daemon && transmission-remote -a'
 alias tral='transmission-remote -l | grep -v 100'
 function traf (){
 	sudo $sv start transmission
