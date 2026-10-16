@@ -18,17 +18,14 @@ EOF
 }
 
 format_torrent_info(){
-    {
-        echo 'Name,Hash,Size,Ratio'
-        transmission-remote -t $1 -j -i \
-        | jq -r '.result.torrents.[] | [.name, "0x" + .hash_string, .total_size, .upload_ratio] | @csv'
-    } | csv2rec
+    transmission-remote -t $1 -j -i \
+        | jq -r '.result.torrents.[] | .hash_string = "0x" + .hash_string' | mlr --ijson --orecutils cat \
+        | recsel -p "name:Name,hash_string:Hash,magnet_link:Magnet,size_when_done:Size"
 }
 
 insert_torrent(){
-    torrent_info="$(format_torrent_info "$1")"
-    printf '\n%s\n' "$torrent_info" | recfix \
-    && printf '\n%s\n' "$torrent_info" | tee -a "$db" | recsel -p 'Name:Added'
+    torrent_info="$(format_torrent_info "$1" | recset -f Type -a "$type")"
+    printf '\n\n%s\n' "$torrent_info" | tee -a "$db" | recsel -p 'Name:Added'
 }
 
 ##############
@@ -42,6 +39,8 @@ name="$(transmission-remote -j --list | jq -r '.result.torrents.[].name' | $fuzz
 id="$(transmission-remote -j --list | jq --arg name "$name" '.result.torrents.[] | select(.name == $name) | .id')"
 
 hash="0x$(transmission-remote -t $id -j -i | jq -r '.result.torrents.[].hash_string')"
+
+type="$(basename $(transmission-remote -t $id -j -i | jq -r '.result.torrents.[].download_dir'))"
 
 torrent_count="$(recsel "$db" -t Torrent -e "Hash = '${hash}'" -c )"
 
