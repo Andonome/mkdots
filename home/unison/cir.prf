@@ -1,6 +1,7 @@
 root=/home/ghost
 root=ssh://ghost@splint.rs:2360//home/ghost/
 times=true
+backuploc=central
 
 log = false
 ignore=Name temp.*
