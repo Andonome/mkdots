@@ -1,6 +1,8 @@
 #!/bin/sh
-
+failures=0
 set -e
+
+. three_strikes
 
 [ -z "$1" ] && \
 	echo Give me a remote ical file && \

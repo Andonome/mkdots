@@ -1,0 +1,14 @@
+
+tellfail(){
+    if [ "$?" -eq 0 ]; then
+        sed -i "2cfailures=0" $0
+    else
+        eval "$(sed -n '2p' $0)"
+        failures=$(( failures + 1 ))
+        sed -i "2cfailures=$failures" $0
+        [ "$failures" -lt 3 || echo "$0 failed" | tellme.sh
+    fi
+}
+
+trap tellfail EXIT
+
