@@ -1,6 +1,9 @@
 #!/bin/sh
+failures=0
 
 set -u
+
+. three_strikes
 
 MAILDIR=${MAIL}
 cd "$MAILDIR"

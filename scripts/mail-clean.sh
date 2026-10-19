@@ -1,7 +1,10 @@
 #!/bin/sh
+failures=0
 
 set -u
 set -e
+
+. three_strikes
 
 cd $MAIL
 
