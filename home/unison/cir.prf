@@ -15,7 +15,6 @@ ignore=Name Library
 
 path=rec
 path=pro
-path=kn
 
 path=.timewarrior
 path=.w3m/bookmark.html
