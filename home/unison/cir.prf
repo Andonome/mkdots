@@ -19,6 +19,7 @@ path=pro
 path=.timewarrior
 path=.w3m/bookmark.html
 
+path=.local/state/task/notes
 path=.local/share/calcurse
 path=.local/share/newsraft
 
