@@ -1,4 +1,5 @@
-set statusline+=<<\ %f\ >>
+set statusline+=%n)\ 
+set statusline+=%f\ >>
 set statusline+=%1* " Remove colour
 set statusline+=%=
 set statusline+=%3*\%h%m%r
