@@ -1,7 +1,6 @@
 # Files
 
 data.location=~/.local/state/
-sync.local.server_dir=/tmp/task
 hooks.location=~/.config/task/hooks
 urgency.inherit=1
 urgency.blocking.coefficient=0
