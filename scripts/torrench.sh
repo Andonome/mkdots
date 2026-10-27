@@ -52,7 +52,7 @@ if [ -z "$category" ] ; then
     category="$( basename -s /mnt/share/* | fzf )"
 fi
 
-sudo $sv start transmission
+sudo $sv start transmission-daemon
 
 transmission-remote -a "$magnet" -w /mnt/share/"$category"
 
