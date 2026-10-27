@@ -218,13 +218,13 @@ function traf (){
 	sudo $sv start transmission
 	[ -n "$1" ] && transmission-remote -a "$1"
 	target="$(transmission-remote -l | sed -n 'x;$p' | awk '{print $1}')"
-	transmission-remote -t $target --move /mnt/share/Films/
+	transmission-remote -t $target --move /mnt/share/films/
 }
 function tras (){
 	sudo $sv start transmission
 	[ -n "$1" ] && transmission-remote -a "$1"
 	target="$(transmission-remote -l | sed -n 'x;$p' | awk '{print $1}')"
-	transmission-remote -t $target --move /mnt/share/Series/
+	transmission-remote -t $target --move /mnt/share/series/
 }
 function tram () {
 	hash=$(transmission-remote -t $1 --info | grep Hash: | awk '{print $2}')
