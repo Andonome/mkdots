@@ -9,7 +9,7 @@ tellfail(){
         eval "$(sed -n '2p' $script)"
         failures=$(( failures + 1 ))
         sed -i "2cfailures=$failures" $script
-        [ "$failures" -lt 3 || echo "$0 failed" | tellme.sh
+        [ "$failures" -lt 3 ] || echo "$0 failed" | tellme.sh
 		exit "$exit_no"
     fi
 }
