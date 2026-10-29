@@ -3,6 +3,7 @@ script="$(realpath $0)"
 
 tellfail(){
 	exit_no="$?"
+	eval "${exit_script}"
     if [ "$exit_no" -eq 0 ]; then
         sed -i "2cfailures=0" $script
     else
