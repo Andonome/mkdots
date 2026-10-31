@@ -5,6 +5,8 @@ set -e
 db=~/rec/nb.rec
 FZF="$(command -v fzf sk | head -1)"
 
+export OFFPUNK_CACHE_PATH=~/kn/links
+
 trap commit EXIT
 
 commit(){
@@ -30,16 +32,9 @@ commit(){
 %type: link rec note
 %constraint: id != link
 %constraint: #head = 0 => #quote
-%type: url rec article
 %type: head,path line
 %type: tag word
 %typedef: word regexp /^[a-z]+[0-9]*$/
-
-%rec: article
-%doc: Pages from the web and beyond
-%key: url
-%type: url,title line
-%allowed: url title author body date
 
 EOF
 }
@@ -47,7 +42,7 @@ EOF
 id=$(recsel "$db" -t note -CR id | tail -1)
 id="$(( id + 1 ))"
 
-parser="$(command -v html2markdown html2text | head -1)"
+parser="$(command -v netcache )"
 graph_format="$(printf '%s\n' "[ {{id}} ] --> [ {{link}} ]")"
 
 graph_box="$(printf '%s\n' '[ {{id}} ]{label: {{id}} {{tag}} ;}')"
@@ -64,28 +59,6 @@ format='# {{head}}
 
 ---
 '
-
-longFormat="# {{head}}
-
-({{id}}) < {{tag[0]}} {{tag[1]}} {{tag[2]}} {{tag[3]}}  > {{link[0]}} {{link[1]}} {{link[2]}} {{link[3]}}
-
-> {{quote}}
-
-{{body}}
-
----
-
-    {{author}} {{url_author}}
-
-    {{path}}
-
----
-
-# {{url_title}}
-
-{{url_body}}
-
-"
 
 while getopts 'mreblf:p:a:g:k:q:t:u:v:' OPTION; do
   case "$OPTION" in
@@ -181,10 +154,7 @@ while getopts 'mreblf:p:a:g:k:q:t:u:v:' OPTION; do
         echo "Give an ID number"
         exit 1
       }
-      result="$(recsel "$db" -t note -e "id = ${OPTARG}" -j url)"
-      [ -z "$result" ] \
-      && recsel "$db" -t note -e "id = ${OPTARG}" | recfmt "${format}" | lowdown -tterm \
-      || recsel "$db" -t note -e "id = ${OPTARG}" -j url | recfmt "$longFormat" | lowdown -stterm | less -RFi
+      recsel "$db" -t note -e "id = ${OPTARG}" | recfmt "${format}" | lowdown -tterm
       exit 0
       ;;
     ?)
@@ -253,14 +223,10 @@ done
 [ -z "$url" ] || {
     recset "$db" -t note -n "$id" -f url -a "$url"
     [ -n "$parser" ] || {
-        echo Install html2markdown or html2text
+        echo Install offpunk
         exit 2
     } \
-    && curl -sL "$url" | $parser > "$tmp" \
-    && [ "$(wc -l < "$tmp")" -gt 2 ] \
-    && $VISUAL "$tmp" \
-    && [ "$(wc -w < "$tmp")" -gt  2 ] \
-    && recins "$db" -t article -f url -v "$url" -f title -v "$(sed -n 's/# //; 1p' "$tmp")" -f body -v "$(sed '1d' "$tmp")" \
+    && netcache "$url" >/dev/null \
     || echo "No article copied"
 }
 
