@@ -20,7 +20,9 @@ $(HOME)/.config/mimeapps.list: $(local_mimetype_files) | $(HOME)/.config/
 	xdg-mime default vim.desktop text/x-tex
 	xdg-mime default vim.desktop text/x-makefile
 	xdg-mime default mat.desktop text/markdown
+	xdg-mime default sc-im.desktop text/csv
 	xdg-mime default sc-im.desktop application/x-sc
+	xdg-mime default visidata.desktop application/vnd.sqlite3
 	xdg-mime default mpv.desktop audio/mpeg
 	xdg-mime default mpv.desktop audio/*
 	xdg-mime default mpv.desktop audio/x-m4a
