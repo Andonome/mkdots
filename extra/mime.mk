@@ -36,10 +36,10 @@ $(HOME)/.config/mimeapps.list: $(local_mimetype_files) | $(HOME)/.config/
 	xdg-mime default org.gnome.font-viewer.desktop font/sfnt
 	xdg-mime default org.inkscape.Inkscape.desktop image/svg+xml
 	xdg-mime default org.pwmt.zathura.desktop application/pdf
-	xdg-mime default sxiv.desktop image/jpeg
-	xdg-mime default sxiv.desktop image/jpg
-	xdg-mime default sxiv.desktop image/webp
-	xdg-mime default sxiv.desktop image/png
+	xdg-mime default swayimg.desktop image/jpeg
+	xdg-mime default swayimg.desktop image/jpg
+	xdg-mime default swayimg.desktop image/webp
+	xdg-mime default swayimg.desktop image/png
 	xdg-settings set default-web-browser org.qutebrowser.desktop
 	xdg-mime default amfora.desktop x-scheme-handler/gemini
 	xdg-mime default aerc.desktop x-scheme-handler/mailto
