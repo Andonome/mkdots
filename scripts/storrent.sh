@@ -19,7 +19,9 @@ EOF
 
 format_torrent_info(){
     transmission-remote -t $1 -j -i \
-        | jq -r '.result.torrents.[] | .hash_string = "0x" + .hash_string' | mlr --ijson --orecutils cat \
+        | jq -r '.result.torrents.[] | .hash_string = "0x" + .hash_string' | mlr --ijson --ocsv cat \
+        | sed '1s/\./_/g' \
+        | csv2rec \
         | recsel -p "name:Name,hash_string:Hash,magnet_link:Magnet,size_when_done:Size"
 }
 
