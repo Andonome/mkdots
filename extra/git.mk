@@ -12,6 +12,7 @@ ${HOME}/.gitconfig: $(MAKEFILE_LIST)
 	git config --global init.defaultbranch master
 	git config --global branch.sort "-committerdate"
 	git config --global merge.conflictstyle diff3
+	git config --global annex.sshcaching true
 	git config --global credential.helper cache
 	git config --global credential.https://repo.studiobedem.rs.helper "!tea login helper"
 
