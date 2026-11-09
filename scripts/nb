@@ -1,7 +1,5 @@
 #!/bin/sh
 
-! ( echo $EDITOR | grep -q vi ) || EDITOR="$EDITOR +$ +star!"
-
 cd ~/rec/notes/ || exit 1
 
 initial_notes="$(ls *.md)"
@@ -98,15 +96,45 @@ request(){
     echo "$initial_notes" | fzf -i --query="$all_arguments" \
     --ghost="$hint" --multi \
     --bind enter:accept-or-print-query \
+    --bind 'ctrl-a:select-all+accept' \
     --preview='$PAGER {}'
 }
 
 commit_to_git(){
     git add *.md
-    git commit -m"NB: $answer"
+    git commit -m"NB: $1"
+}
+
+show_tasks(){
+    grep -Ponm1 '^- \[ ] \K.*' *.md | fzf \
+        --delimiter : \
+        --bind zero:abort \
+        --footer "$(grep --color=always -Pohm1 '^- \[ ] \K.*' *.md)"  \
+        --bind 'focus:transform-preview-label:echo {1}' \
+        --preview '${PAGER:-cat} {1}' \
+        --bind 'enter:become($EDITOR +/{3}/ +"normal 3l" {1})'
 }
 
 #######
+
+while getopts 't' OPTION; do
+  case "$OPTION" in
+    t)
+      #^#  -t: tasks
+      show_tasks
+      last_task="$(git diff | grep -Po '^-- \[\s] \K.*' | head -1)"
+      commit_to_git "$last_task"
+      exit 0
+      ;;
+    ?)
+      echo "Usage: "
+      echo "$(basename $0) [note]"
+      grep -oP '#\^# \K.*' "$0"
+      exit 0
+      ;;
+  esac
+done
+shift "$(($OPTIND -1))"
 
 answer="$( request )"
 unset "all_arguments"
@@ -115,8 +143,10 @@ for note in $answer ; do
     check_the "$note"
 done && $PAGER $answer && exit 0
 
+! ( echo $EDITOR | grep -q vi ) || EDITOR="$EDITOR +$ +star!"
+
 make_note "$answer"
 
-commit_to_git
+commit_to_git "$answer"
 
 echo "Made $fname"
