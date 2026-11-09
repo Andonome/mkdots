@@ -1,0 +1,122 @@
+#!/bin/sh
+
+! ( echo $EDITOR | grep -q vi ) || EDITOR="$EDITOR +$ +star!"
+
+cd ~/rec/notes/ || exit 1
+
+initial_notes="$(ls *.md)"
+
+set -e
+
+all_arguments="${@}"
+
+hint="$(ls -t | head -1)"
+file_count="$(ls | wc -w)"
+
+if [ "$file_count" -gt 20 ]; then
+    hint='***'
+elif [ "$file_count" -gt 15 ]; then
+    hint="Try: $0 my note"
+elif [ "$file_count" -gt 10 ]; then
+    hint="Press tab to view multiple files"
+elif [ "$file_count" -gt 5 ]; then
+    echo "$PAGER" | grep -q less \
+        && hint="When viewing, press 'v' to edit" \
+        || hint="Your pager is weak and bloated"
+fi
+
+line2file(){
+    printf "$1" | cut -d, -f1 \
+        | tr '[:upper:] ' '[:lower:]_' \
+        | tr '&' 'n' \
+        | tr -d "'"'.",`:;/!?#$'  \
+        | sed -r 's/^(the|a|and)_//g' \
+        | sed -r 's/_(the|a|and|for)_/_/g' \
+        | tr -s _ \
+        | sed 's/.*/&.md/'
+}
+
+
+ip="$(ip a | grep -Pom1 'inet \K(\d{1,3}\.){3}\d{2,3}')"
+
+ip_file="/tmp/.$ip"
+
+make_ip_file(){
+    place="$(wget -nv -O- http://api.db-ip.com/v2/free/$(dig +short myip.opendns.com @resolver1.opendns.com) 2>/dev/null \
+        | grep -e city -e state \
+        | cut -d'"' -f4 \
+        | tail -1 )"
+
+    test -n "$place" || place=out
+    echo "place: $place" >> "$ip_file"
+}
+
+test -f /tmp/."$ip" || make_ip_file
+
+show_links(){
+    sed -r -n '/</s#.*<([^>]+).*#\1#p' "$1"
+}
+
+make_note(){
+    fname="$(line2file "$1")"
+    {
+        printf '%s\ndate: ' '---'
+        date -Iminutes
+        cat "$ip_file"
+        printf '%s\n\n' '---'
+        echo "$1"
+    } > "$fname"
+    $EDITOR "$fname"
+    sed -n '1,/^place: /s/place: /place: /p' "$fname" > "$ip_file"
+    check_links "$fname"
+}
+
+check_links(){
+    links="$( show_links "$1" )"
+    test "${#links}" -gt 2 || link_answer="$( request )"
+    for link in $link_answer ; do
+        check_the "$link" \
+        && make_symmetric_links "$1" "$link"
+    done || {
+        test -z "$last_note" || make_symmetric_links "$fname" "$last_note"
+        last_note="$fname"
+        make_note "$link_answer"
+        make_symmetric_links "$fname" "$1"
+    }
+}
+
+make_symmetric_links(){
+    grep -q "<$1>" "$2" || printf "\n\n<$1>\n" >> "$2"
+    grep -q "<$2>" "$1" || printf "\n\n<$2>\n" >> "$1"
+}
+
+check_the(){
+    test -f "$1" || return 1
+}
+
+request(){
+    echo "$initial_notes" | fzf -i --query="$all_arguments" \
+    --ghost="$hint" --multi \
+    --bind enter:accept-or-print-query \
+    --preview='$PAGER {}'
+}
+
+commit_to_git(){
+    git add *.md
+    git commit -m"NB: $answer"
+}
+
+#######
+
+answer="$( request )"
+unset "all_arguments"
+
+for note in $answer ; do
+    check_the "$note"
+done && $PAGER $answer && exit 0
+
+make_note "$answer"
+
+commit_to_git
+
+echo "Made $fname"
