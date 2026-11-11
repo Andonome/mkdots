@@ -56,10 +56,9 @@ show_links(){
 }
 
 make_note(){
-    fname="$(line2file "$1")"
+    fname="$(date -I)-$(line2file "$1")"
     {
-        printf '%s\ndate: ' '---'
-        date -Iminutes
+        printf '%s\n' '---'
         cat "$ip_file"
         printf '%s\n\n' '---'
         echo "$1"
