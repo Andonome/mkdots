@@ -52,7 +52,8 @@ make_ip_file(){
 test -f /tmp/."$ip" || make_ip_file
 
 show_links(){
-    sed -r -n '/</s#.*<([^>]+).*#\1#p' "$1"
+    target="$(sed -r -n '/</s#.*<([^>]+).*#\1#p' "$1")"
+    test ! -f "$target" || echo "$target"
 }
 
 make_note(){
